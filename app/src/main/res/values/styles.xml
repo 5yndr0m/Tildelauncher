@@ -89,12 +89,13 @@
         <item name="android:textColor">?attr/primaryColor</item>
         <item name="android:editTextColor">?attr/primaryColor</item>
         <item name="android:textColorHint">?attr/primaryColor</item>
-        <item name="android:fontFamily">?attr/launcherFont</item>
+        <item name="fontFamily">?attr/launcherFont</item>
         <item name="android:inputType">textCapSentences|textNoSuggestions</item>
         <item name="android:cursorVisible">false</item>
     </style>
 
     <style name="TextDefault" parent="@android:style/TextAppearance.Large">
+        <item name="fontFamily">?attr/launcherFont</item>
         <item name="android:fontFamily">?attr/launcherFont</item>
         <item name="android:textColor">@drawable/text_colors_default</item>
         <item name="android:textColorHint">?attr/primaryColorTrans80</item>
