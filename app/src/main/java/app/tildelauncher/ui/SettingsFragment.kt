@@ -74,12 +74,14 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
 
         populateAppThemeText()
         populateTextSize()
+        populateFontFamilyText()
         populateAlignment()
         populateStatusBar()
         populateDateTime()
         populateSwipeApps()
         populateSwipeDownAction()
         populateActionHints()
+        populateTextColorText()
         initClickListeners()
         initObservers()
     }
@@ -89,6 +91,8 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         binding.dateTimeSelectLayout.visibility = View.GONE
         binding.appThemeSelectLayout.visibility = View.GONE
         binding.swipeDownSelectLayout.visibility = View.GONE
+        binding.fontFamilySelectLayout.visibility = View.GONE
+        binding.textColorSelectLayout.visibility = View.GONE
         if (view.id != R.id.textSizeMinus && view.id != R.id.textSizePlus) {
             if (binding.textSizesLayout.visibility == View.VISIBLE) {
                 binding.textSizesLayout.visibility = View.GONE
@@ -129,6 +133,16 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
 
             R.id.tvGestures -> binding.flSwipeDown.visibility = View.VISIBLE
 
+            R.id.fontFamilyText -> binding.fontFamilySelectLayout.visibility = View.VISIBLE
+            R.id.fontSystem -> updateFont(R.style.FontSystem)
+            R.id.fontSans -> updateFont(R.style.FontSans)
+            R.id.fontSerif -> updateFont(R.style.FontSerif)
+            R.id.fontMono -> updateFont(R.style.FontMono)
+            R.id.fontGeist -> updateFont(R.style.FontGeist)
+            R.id.fontGeistMono -> updateFont(R.style.FontGeistMono)
+            R.id.fontGaramond -> updateFont(R.style.FontGaramond)
+            R.id.fontRoboto -> updateFont(R.style.FontRoboto)
+
             R.id.maxApps0 -> updateHomeAppsNum(0)
             R.id.maxApps1 -> updateHomeAppsNum(1)
             R.id.maxApps2 -> updateHomeAppsNum(2)
@@ -157,6 +171,19 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             R.id.twitter -> requireContext().openUrl(Constants.URL_TWITTER_TANUJ)
             R.id.github -> requireContext().openUrl(Constants.URL_TILDELAUNCHER_GITHUB)
             R.id.privacy -> requireContext().openUrl(Constants.URL_TILDELAUNCHER_PRIVACY)
+
+            R.id.textColorRow, R.id.tvTextColorSelection -> binding.textColorSelectLayout.visibility = View.VISIBLE
+            R.id.colorWhite -> updateTextColor(R.style.ColorWhite)
+            R.id.colorBlack -> updateTextColor(R.style.ColorBlack)
+            R.id.colorGray -> updateTextColor(R.style.ColorGray)
+            R.id.colorRed -> updateTextColor(R.style.ColorRed)
+            R.id.colorBlue -> updateTextColor(R.style.ColorBlue)
+            R.id.colorGreen -> updateTextColor(R.style.ColorGreen)
+            R.id.colorYellow -> updateTextColor(R.style.ColorYellow)
+            R.id.colorOrange -> updateTextColor(R.style.ColorOrange)
+            R.id.colorPurple -> updateTextColor(R.style.ColorPurple)
+            R.id.colorPink -> updateTextColor(R.style.ColorPink)
+            R.id.colorTeal -> updateTextColor(R.style.ColorTeal)
         }
     }
 
@@ -212,6 +239,17 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         binding.themeLight.setOnClickListener(this)
         binding.themeDark.setOnClickListener(this)
         binding.themeSystem.setOnClickListener(this)
+
+        binding.fontFamilyText.setOnClickListener(this)
+        binding.fontSystem.setOnClickListener(this)
+        binding.fontSans.setOnClickListener(this)
+        binding.fontSerif.setOnClickListener(this)
+        binding.fontMono.setOnClickListener(this)
+        binding.fontGeist.setOnClickListener(this)
+        binding.fontGeistMono.setOnClickListener(this)
+        binding.fontGaramond.setOnClickListener(this)
+        binding.fontRoboto.setOnClickListener(this)
+
         binding.textSizeValue.setOnClickListener(this)
         binding.actionAccessibility.setOnClickListener(this)
         binding.closeAccessibility.setOnClickListener(this)
@@ -220,6 +258,20 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         binding.twitter.setOnClickListener(this)
         binding.github.setOnClickListener(this)
         binding.privacy.setOnClickListener(this)
+
+        binding.textColorRow?.setOnClickListener(this)
+        binding.tvTextColorSelection.setOnClickListener(this)
+        binding.colorWhite.setOnClickListener(this)
+        binding.colorBlack.setOnClickListener(this)
+        binding.colorGray.setOnClickListener(this)
+        binding.colorRed.setOnClickListener(this)
+        binding.colorBlue.setOnClickListener(this)
+        binding.colorGreen.setOnClickListener(this)
+        binding.colorYellow.setOnClickListener(this)
+        binding.colorOrange.setOnClickListener(this)
+        binding.colorPurple.setOnClickListener(this)
+        binding.colorPink.setOnClickListener(this)
+        binding.colorTeal.setOnClickListener(this)
 
         binding.maxApps0.setOnClickListener(this)
         binding.maxApps1.setOnClickListener(this)
@@ -465,6 +517,54 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             AppCompatDelegate.MODE_NIGHT_NO -> binding.appThemeText.text = getString(R.string.light)
             else -> binding.appThemeText.text = getString(R.string.system_default)
         }
+    }
+
+    private fun updateFont(fontId: Int) {
+        if (prefs.appFont == fontId) return
+        prefs.appFont = fontId
+        populateFontFamilyText(fontId)
+        requireActivity().recreate()
+    }
+
+    private fun populateFontFamilyText(fontId: Int = prefs.appFont) {
+        binding.fontFamilyText.text = getString(
+            when (fontId) {
+                R.style.FontSans -> R.string.sans_serif
+                R.style.FontSerif -> R.string.serif
+                R.style.FontMono -> R.string.monospace
+                R.style.FontGeist -> R.string.geist
+                R.style.FontGeistMono -> R.string.geist_mono
+                R.style.FontGaramond -> R.string.garamond
+                R.style.FontRoboto -> R.string.roboto
+                else -> R.string.system
+            }
+        )
+    }
+
+    private fun updateTextColor(colorStyleId: Int) {
+        if (prefs.appTextColor == colorStyleId) return
+        prefs.appTextColor = colorStyleId
+        populateTextColorText(colorStyleId)
+        requireActivity().recreate()
+    }
+
+    private fun populateTextColorText(colorStyleId: Int = prefs.appTextColor) {
+        binding.tvTextColorSelection.text = getString(
+            when (colorStyleId) {
+                R.style.ColorWhite -> R.string.color_white
+                R.style.ColorBlack -> R.string.color_black
+                R.style.ColorGray -> R.string.color_gray
+                R.style.ColorRed -> R.string.color_red
+                R.style.ColorBlue -> R.string.color_blue
+                R.style.ColorGreen -> R.string.color_green
+                R.style.ColorYellow -> R.string.color_yellow
+                R.style.ColorOrange -> R.string.color_orange
+                R.style.ColorPurple -> R.string.color_purple
+                R.style.ColorPink -> R.string.color_pink
+                R.style.ColorTeal -> R.string.color_teal
+                else -> R.string.system
+            }
+        )
     }
 
     private fun populateTextSize() {

@@ -38,6 +38,8 @@ class Prefs(context: Context) {
     private val HIDE_SET_DEFAULT_LAUNCHER = "HIDE_SET_DEFAULT_LAUNCHER"
     private val SCREEN_TIME_LAST_UPDATED = "SCREEN_TIME_LAST_UPDATED"
     private val LAUNCHER_RESTART_TIMESTAMP = "LAUNCHER_RECREATE_TIMESTAMP"
+    private val APP_FONT = "APP_FONT"
+    private val APP_TEXT_COLOR = "APP_TEXT_COLOR"
 
     private val APP_NAME_1 = "APP_NAME_1"
     private val APP_NAME_2 = "APP_NAME_2"
@@ -198,6 +200,14 @@ class Prefs(context: Context) {
     var launcherRestartTimestamp: Long
         get() = prefs.getLong(LAUNCHER_RESTART_TIMESTAMP, 0L)
         set(value) = prefs.edit { putLong(LAUNCHER_RESTART_TIMESTAMP, value).apply() }
+
+    var appFont: Int
+        get() = prefs.getInt(APP_FONT, 0)
+        set(value) = prefs.edit { putInt(APP_FONT, value).apply() }
+
+    var appTextColor: Int
+        get() = prefs.getInt(APP_TEXT_COLOR, 0)
+        set(value) = prefs.edit { putInt(APP_TEXT_COLOR, value).apply() }
 
 
     var hiddenApps: MutableSet<String>

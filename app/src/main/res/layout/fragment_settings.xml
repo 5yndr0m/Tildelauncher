@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainActivityLayout"
     android:layout_width="match_parent"
@@ -104,7 +105,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
                     android:text="@string/home_screen"
-                    android:textColor="?attr/primaryColor" />
+                    android:textColor="?attr/launcherTextColor" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -121,7 +122,7 @@
                         android:layout_marginStart="8dp"
                         android:paddingVertical="8dp"
                         android:text="@string/apps_on_home_screen"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/homeAppsNum"
@@ -134,6 +135,7 @@
                         android:paddingStart="24dp"
                         android:paddingEnd="8dp"
                         tools:text="@string/_8" />
+
 
                     <!-- Home apps numbers layout-->
                     <LinearLayout
@@ -256,7 +258,7 @@
                         android:layout_marginStart="8dp"
                         android:paddingVertical="8dp"
                         android:text="@string/show_date_time"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/dateTime"
@@ -338,7 +340,7 @@
                         android:layout_marginStart="8dp"
                         android:paddingVertical="8dp"
                         android:text="@string/home_layout_alignment"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/alignment"
@@ -446,7 +448,7 @@
                         android:layout_marginStart="8dp"
                         android:paddingVertical="8dp"
                         android:text="@string/screen_time"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/screenTimeOnOff"
@@ -481,7 +483,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
                     android:text="@string/appearance"
-                    android:textColor="?attr/primaryColor" />
+                    android:textColor="?attr/launcherTextColor" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -496,7 +498,7 @@
                         android:layout_marginStart="8dp"
                         android:paddingVertical="8dp"
                         android:text="@string/auto_show_keyboard"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/autoShowKeyboard"
@@ -523,7 +525,7 @@
                         android:layout_marginStart="8dp"
                         android:paddingVertical="8dp"
                         android:text="@string/notification_bar"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/statusBar"
@@ -539,6 +541,283 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/font_family"
+                        android:textColor="?attr/launcherTextColor" />
+
+                    <TextView
+                        android:id="@+id/fontFamilyText"
+                        style="@style/TextSmallBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginEnd="4dp"
+                        android:padding="8dp"
+                        android:text="@string/system" />
+
+                    <!-- font family select layout-->
+                    <HorizontalScrollView
+                        android:id="@+id/fontFamilySelectLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_primary_gradient"
+                        android:elevation="8dp"
+                        android:outlineAmbientShadowColor="@color/colorPrimaryDark"
+                        android:outlineSpotShadowColor="@color/colorPrimaryDark"
+                        android:scrollbars="none"
+                        android:visibility="gone"
+                        tools:ignore="UnusedAttribute">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:id="@+id/fontSystem"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/system"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fontSans"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/sans_serif"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fontSerif"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/serif"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fontMono"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/monospace"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fontGeist"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/geist"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fontGeistMono"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/geist_mono"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fontGaramond"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/garamond"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fontRoboto"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/roboto"
+                                android:textColor="@color/white" />
+
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/textColorRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/settings_text_color"
+                        android:textColor="?attr/launcherTextColor" />
+
+                    <TextView
+                        android:id="@+id/tvTextColorSelection"
+                        style="@style/TextSmallBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginEnd="4dp"
+                        android:padding="8dp"
+                        android:text="@string/system" />
+
+                    <!-- text color select layout-->
+                    <HorizontalScrollView
+                        android:id="@+id/textColorSelectLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_primary_gradient"
+                        android:elevation="8dp"
+                        android:outlineAmbientShadowColor="@color/colorPrimaryDark"
+                        android:outlineSpotShadowColor="@color/colorPrimaryDark"
+                        android:scrollbars="none"
+                        android:visibility="gone"
+                        tools:ignore="UnusedAttribute">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="8dp">
+
+                            <!-- White -->
+                            <View
+                                android:id="@+id/colorWhite"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_white"
+                                android:elevation="4dp" />
+
+                            <!-- Black -->
+                            <View
+                                android:id="@+id/colorBlack"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_black"
+                                android:elevation="4dp" />
+
+                            <!-- Gray -->
+                            <View
+                                android:id="@+id/colorGray"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_gray"
+                                android:elevation="4dp" />
+
+                            <!-- Red -->
+                            <View
+                                android:id="@+id/colorRed"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_red"
+                                android:elevation="4dp" />
+
+                            <!-- Blue -->
+                            <View
+                                android:id="@+id/colorBlue"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_blue"
+                                android:elevation="4dp" />
+
+                            <!-- Green -->
+                            <View
+                                android:id="@+id/colorGreen"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_green"
+                                android:elevation="4dp" />
+
+                            <!-- Yellow -->
+                            <View
+                                android:id="@+id/colorYellow"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_yellow"
+                                android:elevation="4dp" />
+
+                            <!-- Orange -->
+                            <View
+                                android:id="@+id/colorOrange"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_orange"
+                                android:elevation="4dp" />
+
+                            <!-- Purple -->
+                            <View
+                                android:id="@+id/colorPurple"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_purple"
+                                android:elevation="4dp" />
+
+                            <!-- Pink -->
+                            <View
+                                android:id="@+id/colorPink"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_pink"
+                                android:elevation="4dp" />
+
+                            <!-- Teal -->
+                            <View
+                                android:id="@+id/colorTeal"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_teal"
+                                android:elevation="4dp" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:animateLayoutChanges="true">
 
@@ -549,7 +828,7 @@
                         android:layout_marginStart="8dp"
                         android:paddingVertical="8dp"
                         android:text="@string/theme_mode"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/appThemeText"
@@ -632,7 +911,7 @@
                         android:layout_marginStart="8dp"
                         android:paddingVertical="8dp"
                         android:text="@string/text_size"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/textSizeValue"
@@ -716,7 +995,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
                     android:text="@string/gestures"
-                    android:textColor="?attr/primaryColor" />
+                    android:textColor="?attr/launcherTextColor" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -734,7 +1013,7 @@
                         android:lines="1"
                         android:paddingVertical="8dp"
                         android:text="@string/swipe_left_app"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/swipeLeftApp"
@@ -763,7 +1042,7 @@
                         android:lines="1"
                         android:paddingVertical="8dp"
                         android:text="@string/swipe_right_app"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/swipeRightApp"
@@ -794,7 +1073,7 @@
                         android:lines="1"
                         android:paddingVertical="8dp"
                         android:text="@string/swipe_down_for"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/swipeDownAction"
@@ -864,7 +1143,7 @@
                         android:layout_height="wrap_content"
                         android:paddingVertical="8dp"
                         android:text="@string/double_tap_to_lock_screen"
-                        android:textColor="?attr/primaryColor" />
+                        android:textColor="?attr/launcherTextColor" />
 
                     <TextView
                         android:id="@+id/toggleLock"
@@ -892,7 +1171,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:padding="10dp"
-                    android:text="@string/twitter" />
+                    android:text="@string/twitter"
+                    android:textColor="?attr/launcherTextColor" />
 
 
                 <TextView
@@ -903,7 +1183,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:padding="10dp"
-                    android:text="@string/github" />
+                    android:text="@string/github"
+                    android:textColor="?attr/launcherTextColor" />
 
                 <TextView
                     android:id="@+id/privacy"
@@ -913,7 +1194,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:padding="10dp"
-                    android:text="@string/privacy" />
+                    android:text="@string/privacy"
+                    android:textColor="?attr/launcherTextColor" />
             </LinearLayout>
 
 
@@ -950,7 +1232,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/double_tap_lock"
-                android:textColor="?attr/primaryColor" />
+                android:textColor="?attr/launcherTextColor" />
 
             <TextView
                 style="@style/TextSmall"
@@ -959,7 +1241,7 @@
                 android:layout_marginTop="16dp"
                 android:clickable="false"
                 android:text="@string/accessibility_disclosure"
-                android:textColor="?attr/primaryColor" />
+                android:textColor="?attr/launcherTextColor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
