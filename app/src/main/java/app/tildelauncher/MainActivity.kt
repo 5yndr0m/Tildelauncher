@@ -29,7 +29,7 @@ import app.tildelauncher.helper.isDarkThemeOn
 import app.tildelauncher.helper.isDaySince
 import app.tildelauncher.helper.isDefaultLauncher
 import app.tildelauncher.helper.isEinkDisplay
-import app.tildelauncher.helper.isOlauncherDefault
+import app.tildelauncher.helper.isTildelauncherDefault
 import app.tildelauncher.helper.isTablet
 import app.tildelauncher.helper.openUrl
 import app.tildelauncher.helper.rateApp
@@ -217,7 +217,7 @@ class MainActivity : AppCompatActivity() {
 
                 Constants.Dialog.PRO_MESSAGE -> {
                     showMessageDialog(R.string.hey, R.string.pro_message, R.string.tildelauncher_pro) {
-                        openUrl(Constants.URL_OLAUNCHER_PRO)
+                        openUrl(Constants.URL_TILDELAUNCHER_PRO)
                     }
                 }
             }
@@ -260,28 +260,28 @@ class MainActivity : AppCompatActivity() {
             Constants.UserState.WALLPAPER -> {
                 if (prefs.wallpaperMsgShown || prefs.dailyWallpaper)
                     prefs.userState = Constants.UserState.REVIEW
-                else if (isOlauncherDefault(this))
+                else if (isTildelauncherDefault(this))
                     viewModel.showDialog.postValue(Constants.Dialog.WALLPAPER)
             }
 
             Constants.UserState.REVIEW -> {
                 if (prefs.rateClicked)
                     prefs.userState = Constants.UserState.SHARE
-                else if (isOlauncherDefault(this) && prefs.firstOpenTime.hasBeenHours(1))
+                else if (isTildelauncherDefault(this) && prefs.firstOpenTime.hasBeenHours(1))
                     viewModel.showDialog.postValue(Constants.Dialog.REVIEW)
             }
 
             Constants.UserState.RATE -> {
                 if (prefs.rateClicked)
                     prefs.userState = Constants.UserState.SHARE
-                else if (isOlauncherDefault(this)
+                else if (isTildelauncherDefault(this)
                     && prefs.firstOpenTime.isDaySince() >= 7
                     && calendar.get(Calendar.HOUR_OF_DAY) >= 16
                 ) viewModel.showDialog.postValue(Constants.Dialog.RATE)
             }
 
             Constants.UserState.SHARE -> {
-                if (isOlauncherDefault(this) && prefs.firstOpenTime.hasBeenDays(14)
+                if (isTildelauncherDefault(this) && prefs.firstOpenTime.hasBeenDays(14)
                     && prefs.shareShownTime.isDaySince() >= 70
                     && calendar.get(Calendar.HOUR_OF_DAY) >= 16
                 ) viewModel.showDialog.postValue(Constants.Dialog.SHARE)

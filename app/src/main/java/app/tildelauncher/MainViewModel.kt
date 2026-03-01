@@ -22,7 +22,7 @@ import app.tildelauncher.helper.WallpaperWorker
 import app.tildelauncher.helper.formattedTimeSpent
 import app.tildelauncher.helper.getAppsList
 import app.tildelauncher.helper.hasBeenMinutes
-import app.tildelauncher.helper.isOlauncherDefault
+import app.tildelauncher.helper.isTildelauncherDefault
 import app.tildelauncher.helper.isPackageInstalled
 import app.tildelauncher.helper.showToast
 import app.tildelauncher.helper.usageStats.EventLogWrapper
@@ -41,7 +41,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val updateSwipeApps = MutableLiveData<Any>()
     val appList = MutableLiveData<List<AppModel>?>()
     val hiddenApps = MutableLiveData<List<AppModel>?>()
-    val isOlauncherDefault = MutableLiveData<Boolean>()
+    val isTildelauncherDefault = MutableLiveData<Boolean>()
     val launcherResetFailed = MutableLiveData<Boolean>()
     val homeAppAlignment = MutableLiveData<Int>()
     val screenTimeValue = MutableLiveData<String>()
@@ -369,8 +369,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun isOlauncherDefault() {
-        isOlauncherDefault.value = isOlauncherDefault(appContext)
+    fun isTildelauncherDefault() {
+        isTildelauncherDefault.value = isTildelauncherDefault(appContext)
     }
 
     fun setWallpaperWorker() {

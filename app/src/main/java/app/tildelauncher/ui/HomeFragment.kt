@@ -81,7 +81,7 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
     override fun onResume() {
         super.onResume()
         populateHomeScreen(false)
-        viewModel.isOlauncherDefault()
+        viewModel.isTildelauncherDefault()
         if (prefs.showStatusBar) showStatusBar()
         else hideStatusBar()
     }
@@ -156,7 +156,7 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
             R.id.setDefaultLauncher -> {
                 prefs.hideSetDefaultLauncher = true
                 binding.setDefaultLauncher.visibility = View.GONE
-                if (viewModel.isOlauncherDefault.value != true) {
+                if (viewModel.isTildelauncherDefault.value != true) {
                     requireContext().showToast(R.string.set_as_default_launcher)
                     findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
                 }
@@ -174,7 +174,7 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         viewModel.refreshHome.observe(viewLifecycleOwner) {
             populateHomeScreen(it)
         }
-        viewModel.isOlauncherDefault.observe(viewLifecycleOwner, Observer {
+        viewModel.isTildelauncherDefault.observe(viewLifecycleOwner, Observer {
             if (it != true) {
                 if (prefs.dailyWallpaper) {
                     prefs.dailyWallpaper = false

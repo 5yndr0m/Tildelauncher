@@ -32,7 +32,7 @@ import app.tildelauncher.helper.getColorFromAttr
 import app.tildelauncher.helper.isAccessServiceEnabled
 import app.tildelauncher.helper.isDarkThemeOn
 import app.tildelauncher.helper.isEinkDisplay
-import app.tildelauncher.helper.isOlauncherDefault
+import app.tildelauncher.helper.isTildelauncherDefault
 import app.tildelauncher.helper.isTablet
 import app.tildelauncher.helper.openAppInfo
 import app.tildelauncher.helper.openUrl
@@ -63,7 +63,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         viewModel = activity?.run {
             ViewModelProvider(this)[MainViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
-        viewModel.isOlauncherDefault()
+        viewModel.isTildelauncherDefault()
 
         deviceManager = requireContext().getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         componentName = ComponentName(requireContext(), DeviceAdmin::class.java)
@@ -152,9 +152,9 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             R.id.notifications -> updateSwipeDownAction(Constants.SwipeDownAction.NOTIFICATIONS)
             R.id.search -> updateSwipeDownAction(Constants.SwipeDownAction.SEARCH)
 
-            R.id.aboutOlauncher -> {
+            R.id.aboutTildelauncher -> {
                 prefs.aboutClicked = true
-                requireContext().openUrl(Constants.URL_ABOUT_OLAUNCHER)
+                requireContext().openUrl(Constants.URL_ABOUT_TILDELAUNCHER)
             }
 
             R.id.share -> requireActivity().shareApp()
@@ -164,8 +164,8 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             }
 
             R.id.twitter -> requireContext().openUrl(Constants.URL_TWITTER_TANUJ)
-            R.id.github -> requireContext().openUrl(Constants.URL_OLAUNCHER_GITHUB)
-            R.id.privacy -> requireContext().openUrl(Constants.URL_OLAUNCHER_PRIVACY)
+            R.id.github -> requireContext().openUrl(Constants.URL_TILDELAUNCHER_GITHUB)
+            R.id.privacy -> requireContext().openUrl(Constants.URL_TILDELAUNCHER_PRIVACY)
             R.id.footer -> requireContext().openUrl(Constants.URL_NTS)
         }
     }
@@ -196,7 +196,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         binding.scrollLayout.setOnClickListener(this)
         binding.appInfo.setOnClickListener(this)
         binding.setLauncher.setOnClickListener(this)
-        binding.aboutOlauncher.setOnClickListener(this)
+        binding.aboutTildelauncher.setOnClickListener(this)
         binding.moreFeatures.setOnClickListener(this)
         binding.autoShowKeyboard.setOnClickListener(this)
         binding.toggleLock.setOnClickListener(this)
@@ -261,7 +261,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             viewModel.showDialog.postValue(Constants.Dialog.ABOUT)
             prefs.firstSettingsOpen = false
         }
-        viewModel.isOlauncherDefault.observe(viewLifecycleOwner) {
+        viewModel.isTildelauncherDefault.observe(viewLifecycleOwner) {
             if (it) {
                 binding.setLauncher.text = getString(R.string.change_default_launcher)
                 prefs.toShowHintCounter += 1
@@ -433,7 +433,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
     }
 
     private fun toggleDailyWallpaperUpdate() {
-        if (prefs.dailyWallpaper.not() && viewModel.isOlauncherDefault.value == false) {
+        if (prefs.dailyWallpaper.not() && viewModel.isTildelauncherDefault.value == false) {
             requireContext().showToast(R.string.set_as_default_launcher_first)
             return
         }
@@ -446,7 +446,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
     }
 
     private fun showWallpaperToasts() {
-        if (isOlauncherDefault(requireContext()))
+        if (isTildelauncherDefault(requireContext()))
             requireContext().showToast(getString(R.string.your_wallpaper_will_update_shortly))
         else
             requireContext().showToast(getString(R.string.tildelauncher_is_not_default_launcher), Toast.LENGTH_LONG)
@@ -553,7 +553,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
     }
 
     private fun updateHomeBottomAlignment() {
-        if (viewModel.isOlauncherDefault.value != true) {
+        if (viewModel.isTildelauncherDefault.value != true) {
             requireContext().showToast(getString(R.string.please_set_tildelauncher_as_default_first), Toast.LENGTH_LONG)
             return
         }
@@ -633,8 +633,8 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
 
     private fun populateActionHints() {
         if (prefs.aboutClicked.not())
-            binding.aboutOlauncher.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_info, 0)
-        if (viewModel.isOlauncherDefault.value != true) return
+            binding.aboutTildelauncher.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_info, 0)
+        if (viewModel.isTildelauncherDefault.value != true) return
         if (prefs.rateClicked.not() && prefs.toShowHintCounter > Constants.HINT_RATE_US && prefs.toShowHintCounter < Constants.HINT_RATE_US + 100)
             binding.rate.setCompoundDrawablesWithIntrinsicBounds(0, android.R.drawable.arrow_down_float, 0, 0)
     }
