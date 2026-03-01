@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Preset Colors -->
+    <color name="preset_white">#FFFFFF</color>
+    <color name="preset_black">#000000</color>
+    <color name="preset_gray">#808080</color>
+    <color name="preset_red">#F44336</color>
+    <color name="preset_blue">#2196F3</color>
+    <color name="preset_green">#4CAF50</color>
+    <color name="preset_yellow">#FFEB3B</color>
+    <color name="preset_orange">#FF9800</color>
+    <color name="preset_purple">#9C27B0</color>
+    <color name="preset_pink">#E91E63</color>
+    <color name="preset_teal">#009688</color>
+
     <color name="colorPrimary">@android:color/white</color>
     <color name="colorPrimaryDark">@android:color/darker_gray</color>
     <color name="colorAccent">#FFEB3B</color>
