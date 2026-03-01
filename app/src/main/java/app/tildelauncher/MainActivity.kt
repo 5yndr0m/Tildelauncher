@@ -196,11 +196,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                Constants.Dialog.PRO_MESSAGE -> {
-                    showMessageDialog(R.string.hey, R.string.pro_message, R.string.tildelauncher_pro) {
-                        openUrl(Constants.URL_TILDELAUNCHER_PRO)
-                    }
-                }
             }
         }
     }
