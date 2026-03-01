@@ -42,6 +42,7 @@
         <item name="primaryShadeColor">@color/whiteInverseTrans10</item>
         <item name="primaryShadeDarkColor">@color/whiteInverseTrans25</item>
         <item name="dialogShadeColor">@color/whiteInverseTrans50</item>
+        <item name="launcherFont">sans-serif-light</item>
 
     </style>
 
@@ -56,12 +57,15 @@
         <item name="android:textColor">?attr/primaryColor</item>
         <item name="android:editTextColor">?attr/primaryColor</item>
         <item name="android:textColorHint">?attr/primaryColor</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="fontFamily">?attr/launcherFont</item>
+        <item name="android:fontFamily">?attr/launcherFont</item>
         <item name="android:inputType">textCapSentences|textNoSuggestions</item>
         <item name="android:cursorVisible">false</item>
     </style>
 
     <style name="TextDefault" parent="@android:style/TextAppearance.Large">
+        <item name="fontFamily">?attr/launcherFont</item>
+        <item name="android:fontFamily">?attr/launcherFont</item>
         <item name="android:textColor">@drawable/text_colors_default</item>
         <item name="android:textColorHint">?attr/primaryColorTrans80</item>
         <item name="android:shadowColor">?attr/primaryTextShadowColor</item>
@@ -71,7 +75,6 @@
     </style>
 
     <style name="TextLarge" parent="TextDefault">
-        <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
