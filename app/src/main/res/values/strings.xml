@@ -150,4 +150,17 @@
     <string name="roboto">Roboto</string>
 
     <string name="notification_bar">Notification bar</string>
+    <string name="settings_font_family">Font family</string>
+    <string name="settings_text_color">Text color</string>
+    <string name="color_white">White</string>
+    <string name="color_black">Black</string>
+    <string name="color_gray">Gray</string>
+    <string name="color_red">Red</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_green">Green</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_purple">Purple</string>
+    <string name="color_pink">Pink</string>
+    <string name="color_teal">Teal</string>
 </resources>

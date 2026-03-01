@@ -42,6 +42,7 @@
         <item name="primaryShadeColor">@color/whiteInverseTrans10</item>
         <item name="primaryShadeDarkColor">@color/whiteInverseTrans25</item>
         <item name="dialogShadeColor">@color/whiteInverseTrans50</item>
+        <item name="launcherTextColor">?attr/primaryColor</item>
         <item name="launcherFont">sans-serif-light</item>
 
     </style>
@@ -92,6 +93,51 @@
 
     <style name="TextSmallLight" parent="TextSmall">
         <item name="android:textColor">@drawable/text_colors_light</item>
+    </style>
+
+    <!-- Color Presets (Shared with light theme) -->
+    <style name="ColorWhite">
+        <item name="launcherTextColor">@color/preset_white</item>
+    </style>
+
+    <style name="ColorBlack">
+        <item name="launcherTextColor">@color/preset_black</item>
+    </style>
+
+    <style name="ColorGray">
+        <item name="launcherTextColor">@color/preset_gray</item>
+    </style>
+
+    <style name="ColorRed">
+        <item name="launcherTextColor">@color/preset_red</item>
+    </style>
+
+    <style name="ColorBlue">
+        <item name="launcherTextColor">@color/preset_blue</item>
+    </style>
+
+    <style name="ColorGreen">
+        <item name="launcherTextColor">@color/preset_green</item>
+    </style>
+
+    <style name="ColorYellow">
+        <item name="launcherTextColor">@color/preset_yellow</item>
+    </style>
+
+    <style name="ColorOrange">
+        <item name="launcherTextColor">@color/preset_orange</item>
+    </style>
+
+    <style name="ColorPurple">
+        <item name="launcherTextColor">@color/preset_purple</item>
+    </style>
+
+    <style name="ColorPink">
+        <item name="launcherTextColor">@color/preset_pink</item>
+    </style>
+
+    <style name="ColorTeal">
+        <item name="launcherTextColor">@color/preset_teal</item>
     </style>
 
 </resources>

@@ -42,6 +42,7 @@
         <item name="primaryShadeColor">@color/blackInverseTrans10</item>
         <item name="primaryShadeDarkColor">@color/blackInverseTrans25</item>
         <item name="dialogShadeColor">@color/blackInverseTrans50</item>
+        <item name="launcherTextColor">?attr/primaryColor</item>
         <item name="launcherFont">sans-serif-light</item>
 
     </style>
@@ -83,12 +84,57 @@
         <item name="launcherFont">@font/roboto</item>
     </style>
 
+    <!-- Color Presets -->
+    <style name="ColorWhite">
+        <item name="launcherTextColor">@color/preset_white</item>
+    </style>
+
+    <style name="ColorBlack">
+        <item name="launcherTextColor">@color/preset_black</item>
+    </style>
+
+    <style name="ColorGray">
+        <item name="launcherTextColor">@color/preset_gray</item>
+    </style>
+
+    <style name="ColorRed">
+        <item name="launcherTextColor">@color/preset_red</item>
+    </style>
+
+    <style name="ColorBlue">
+        <item name="launcherTextColor">@color/preset_blue</item>
+    </style>
+
+    <style name="ColorGreen">
+        <item name="launcherTextColor">@color/preset_green</item>
+    </style>
+
+    <style name="ColorYellow">
+        <item name="launcherTextColor">@color/preset_yellow</item>
+    </style>
+
+    <style name="ColorOrange">
+        <item name="launcherTextColor">@color/preset_orange</item>
+    </style>
+
+    <style name="ColorPurple">
+        <item name="launcherTextColor">@color/preset_purple</item>
+    </style>
+
+    <style name="ColorPink">
+        <item name="launcherTextColor">@color/preset_pink</item>
+    </style>
+
+    <style name="ColorTeal">
+        <item name="launcherTextColor">@color/preset_teal</item>
+    </style>
+
     <style name="AppSearchText" parent="Widget.AppCompat.SearchView">
         <item name="android:maxLength">200</item>
         <item name="android:textSize">@dimen/text_large</item>
-        <item name="android:textColor">?attr/primaryColor</item>
-        <item name="android:editTextColor">?attr/primaryColor</item>
-        <item name="android:textColorHint">?attr/primaryColor</item>
+        <item name="android:textColor">?attr/launcherTextColor</item>
+        <item name="android:editTextColor">?attr/launcherTextColor</item>
+        <item name="android:textColorHint">?attr/launcherTextColor</item>
         <item name="fontFamily">?attr/launcherFont</item>
         <item name="android:inputType">textCapSentences|textNoSuggestions</item>
         <item name="android:cursorVisible">false</item>
