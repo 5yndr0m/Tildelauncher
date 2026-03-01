@@ -8,17 +8,10 @@ import android.os.UserHandle
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.work.BackoffPolicy
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import app.tildelauncher.data.AppModel
 import app.tildelauncher.data.Constants
 import app.tildelauncher.data.Prefs
 import app.tildelauncher.helper.SingleLiveEvent
-import app.tildelauncher.helper.WallpaperWorker
 import app.tildelauncher.helper.formattedTimeSpent
 import app.tildelauncher.helper.getAppsList
 import app.tildelauncher.helper.hasBeenMinutes
@@ -28,7 +21,6 @@ import app.tildelauncher.helper.showToast
 import app.tildelauncher.helper.usageStats.EventLogWrapper
 import kotlinx.coroutines.launch
 import java.util.Calendar
-import java.util.concurrent.TimeUnit
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -373,28 +365,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         isTildelauncherDefault.value = isTildelauncherDefault(appContext)
     }
 
-    fun setWallpaperWorker() {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-        val uploadWorkRequest = PeriodicWorkRequestBuilder<WallpaperWorker>(4, TimeUnit.HOURS)
-            .setBackoffCriteria(BackoffPolicy.LINEAR, 1, TimeUnit.HOURS)
-            .setConstraints(constraints)
-            .build()
-        WorkManager
-            .getInstance(appContext)
-            .enqueueUniquePeriodicWork(
-                Constants.WALLPAPER_WORKER_NAME,
-                ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
-                uploadWorkRequest
-            )
-    }
-
-    fun cancelWallpaperWorker() {
-        WorkManager.getInstance(appContext).cancelUniqueWork(Constants.WALLPAPER_WORKER_NAME)
-        prefs.dailyWallpaperUrl = ""
-        prefs.dailyWallpaper = false
-    }
 
     fun updateHomeAlignment(gravity: Int) {
         prefs.homeAlignment = gravity

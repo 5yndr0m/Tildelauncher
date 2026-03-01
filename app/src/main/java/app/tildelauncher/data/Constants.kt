@@ -9,7 +9,6 @@ object Constants {
 
     object Dialog {
         const val ABOUT = "ABOUT"
-        const val WALLPAPER = "WALLPAPER"
         const val REVIEW = "REVIEW"
         const val HIDDEN = "HIDDEN"
         const val KEYBOARD = "KEYBOARD"
@@ -19,7 +18,6 @@ object Constants {
 
     object UserState {
         const val START = "START"
-        const val WALLPAPER = "WALLPAPER"
         const val REVIEW = "REVIEW"
     }
 
@@ -53,9 +51,6 @@ object Constants {
         "com.oneplus.deskclock", //OnePlus Clock
         "com.miui.clock", //Xiaomi Clock
     )
-
-    const val WALL_TYPE_LIGHT = "light"
-    const val WALL_TYPE_DARK = "dark"
 
 //    const val THEME_MODE_DARK = 0
 //    const val THEME_MODE_LIGHT = 1
@@ -97,9 +92,6 @@ object Constants {
 
     const val URL_PLAY_STORE_DEV = "https://play.google.com/store/apps/dev?id=7198807840081074933"
     const val URL_TWITTER_TANUJ = "https://x.com/tanujnotes"
-    const val URL_WALLPAPERS = "https://gist.githubusercontent.com/tanujnotes/85e2d0343ace71e76615ac346fbff82b/raw"
-    const val URL_DEFAULT_DARK_WALLPAPER = "https://images.unsplash.com/photo-1512551980832-13df02babc9e"
-    const val URL_DEFAULT_LIGHT_WALLPAPER = "https://images.unsplash.com/photo-1515549832467-8783363e19b6"
     const val URL_DUCK_SEARCH = "https://duck.co/?q="
     const val URL_DIGITAL_WELLBEING_LEARN_MORE = "https://tanujnotes.substack.com/p/digital-wellbeing-app-on-android?utm_source=tildelauncher"
 
@@ -107,5 +99,4 @@ object Constants {
     const val DIGITAL_WELLBEING_ACTIVITY = "com.google.android.apps.wellbeing.settings.TopLevelSettingsActivity"
     const val DIGITAL_WELLBEING_SAMSUNG_PACKAGE_NAME = "com.samsung.android.forest"
     const val DIGITAL_WELLBEING_SAMSUNG_ACTIVITY = "com.samsung.android.forest.launcher.LauncherActivity"
-    const val WALLPAPER_WORKER_NAME = "WALLPAPER_WORKER_NAME"
 }

@@ -36,7 +36,6 @@ import app.tildelauncher.helper.isTildelauncherDefault
 import app.tildelauncher.helper.isTablet
 import app.tildelauncher.helper.openAppInfo
 import app.tildelauncher.helper.openUrl
-import app.tildelauncher.helper.setPlainWallpaper
 import app.tildelauncher.helper.showToast
 import app.tildelauncher.listener.DeviceAdmin
 
@@ -72,7 +71,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         populateKeyboardText()
         populateScreenTimeOnOff()
         populateLockSettings()
-        populateWallpaperText()
+
         populateAppThemeText()
         populateTextSize()
         populateAlignment()
@@ -108,8 +107,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             R.id.toggleLock -> toggleLockMode()
             R.id.autoShowKeyboard -> toggleKeyboardText()
             R.id.homeAppsNum -> binding.appsNumSelectLayout.visibility = View.VISIBLE
-            R.id.dailyWallpaperUrl -> requireContext().openUrl(prefs.dailyWallpaperUrl)
-            R.id.dailyWallpaper -> toggleDailyWallpaperUpdate()
+
             R.id.alignment -> binding.alignmentSelectLayout.visibility = View.VISIBLE
             R.id.alignmentLeft -> viewModel.updateHomeAlignment(Gravity.START)
             R.id.alignmentCenter -> viewModel.updateHomeAlignment(Gravity.CENTER)
@@ -170,7 +168,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
                 requireContext().showToast(getString(R.string.alignment_changed))
             }
 
-            R.id.dailyWallpaper -> removeWallpaper()
+
             R.id.appThemeText -> {
                 binding.appThemeSelectLayout.visibility = View.VISIBLE
                 binding.themeSystem.visibility = View.VISIBLE
@@ -194,8 +192,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         binding.toggleLock.setOnClickListener(this)
         binding.homeAppsNum.setOnClickListener(this)
         binding.screenTimeOnOff.setOnClickListener(this)
-        binding.dailyWallpaperUrl.setOnClickListener(this)
-        binding.dailyWallpaper.setOnClickListener(this)
+
         binding.alignment.setOnClickListener(this)
         binding.alignmentLeft.setOnClickListener(this)
         binding.alignmentCenter.setOnClickListener(this)
@@ -237,7 +234,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         binding.textSizeMinus.setOnClickListener(this)
         binding.textSizePlus.setOnClickListener(this)
 
-        binding.dailyWallpaper.setOnLongClickListener(this)
+
         binding.alignment.setOnLongClickListener(this)
         binding.appThemeText.setOnLongClickListener(this)
         binding.swipeLeftApp.setOnLongClickListener(this)
@@ -407,39 +404,6 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         }
     }
 
-    private fun removeWallpaper() {
-        if (requireContext().isEinkDisplay()) {
-            prefs.appTheme = AppCompatDelegate.MODE_NIGHT_NO
-            setPlainWallpaper(requireContext(), android.R.color.white)
-        } else {
-            prefs.appTheme = AppCompatDelegate.MODE_NIGHT_YES
-            setPlainWallpaper(requireContext(), android.R.color.black)
-        }
-        if (!prefs.dailyWallpaper) return
-        prefs.dailyWallpaper = false
-        populateWallpaperText()
-        viewModel.cancelWallpaperWorker()
-    }
-
-    private fun toggleDailyWallpaperUpdate() {
-        if (prefs.dailyWallpaper.not() && viewModel.isTildelauncherDefault.value == false) {
-            requireContext().showToast(R.string.set_as_default_launcher_first)
-            return
-        }
-        prefs.dailyWallpaper = !prefs.dailyWallpaper
-        populateWallpaperText()
-        if (prefs.dailyWallpaper) {
-            viewModel.setWallpaperWorker()
-            showWallpaperToasts()
-        } else viewModel.cancelWallpaperWorker()
-    }
-
-    private fun showWallpaperToasts() {
-        if (isTildelauncherDefault(requireContext()))
-            requireContext().showToast(getString(R.string.your_wallpaper_will_update_shortly))
-        else
-            requireContext().showToast(getString(R.string.tildelauncher_is_not_default_launcher), Toast.LENGTH_LONG)
-    }
 
     private fun updateHomeAppsNum(num: Int) {
         binding.homeAppsNum.text = num.toString()
@@ -491,24 +455,9 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
 
     private fun setAppTheme(theme: Int) {
         if (AppCompatDelegate.getDefaultNightMode() == theme) return
-        if (prefs.dailyWallpaper) {
-            setPlainWallpaper(theme)
-            viewModel.setWallpaperWorker()
-        }
         requireActivity().recreate()
     }
 
-    private fun setPlainWallpaper(appTheme: Int) {
-        when (appTheme) {
-            AppCompatDelegate.MODE_NIGHT_YES -> setPlainWallpaper(requireContext(), android.R.color.black)
-            AppCompatDelegate.MODE_NIGHT_NO -> setPlainWallpaper(requireContext(), android.R.color.white)
-            else -> {
-                if (requireContext().isDarkThemeOn())
-                    setPlainWallpaper(requireContext(), android.R.color.black)
-                else setPlainWallpaper(requireContext(), android.R.color.white)
-            }
-        }
-    }
 
     private fun populateAppThemeText(appTheme: Int = prefs.appTheme) {
         when (appTheme) {
@@ -536,10 +485,6 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         else binding.autoShowKeyboard.text = getString(R.string.off)
     }
 
-    private fun populateWallpaperText() {
-        if (prefs.dailyWallpaper) binding.dailyWallpaper.text = getString(R.string.on)
-        else binding.dailyWallpaper.text = getString(R.string.off)
-    }
 
     private fun updateHomeBottomAlignment() {
         if (viewModel.isTildelauncherDefault.value != true) {

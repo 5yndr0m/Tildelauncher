@@ -36,7 +36,6 @@
     <string name="donate">Donate</string>
     <string name="swipe_up_for_apps">1. Swipe up for all apps\n2. Long press anywhere for settings</string>
     <string name="apps_on_home_screen">Apps on home screen</string>
-    <string name="daily_wallpaper_update">Daily new wallpaper</string>
     <string name="left">Left</string>
     <string name="right">Right</string>
     <string name="center">Center</string>
@@ -76,8 +75,6 @@
     <string name="app_usage_message">To show/hide your screen time on the home screen, please allow or disallow the app usage permission.
         \n\nNote: No app usage data is collected. Everything is processed on your device.</string>
 
-    <string name="wallpaper_message">Tildelauncher offers beautiful new wallpapers daily. Give your homescreen a fresh new look every day, for free!
-        \n\nWant to try it?</string>
     <string name="accessibility_service_description">The accessibility permission is required to enable double tap to lock. Any data acquired by Tildelauncher via this service will not leave your device.</string>
     <string name="support_tildelauncher_for_free">Support Tildelauncher for free by using our Amazon affiliate link.</string>
     <string name="support_tildelauncher_message">Every time you buy something using our link, we get a small commission. Please save the link and use it whenever you shop online.\nThank you!</string>
@@ -127,8 +124,6 @@
     <string name="swipe_right_app_enabled">Swipe right app enabled</string>
     <string name="swipe_left_app_disabled">Swipe left app disabled</string>
     <string name="swipe_right_app_disabled">Swipe right app disabled</string>
-    <string name="your_wallpaper_will_update_shortly">Your wallpaper will update shortly</string>
-    <string name="tildelauncher_is_not_default_launcher">Tildelauncher is not default. Wallpaper update will fail.</string>
     <string name="long_press_to_enable">Long press to enable</string>
     <string name="no_hidden_apps">No hidden apps</string>
     <string name="hidden_apps">Hidden apps</string>
@@ -138,7 +133,6 @@
     <string name="about_tildelauncher">About and FAQs</string>
     <string name="screen_time">Screen time</string>
     <string name="learn_more">Learn more</string>
-    <string name="did_you_know">Did you know?</string>
     <string name="leave_a_review">Leave a review</string>
     <string name="review_message">Tildelauncher is free and always will be. It has no ads, collects no data, and reduces your screen time, resulting in a healthier life.
         \n\nWe hope you enjoy it. Tell us what you think.</string>
@@ -146,8 +140,5 @@
     <string name="home_screen">Home screen</string>
     <string name="hey">Hey</string>
 
-    <string name="new_year_wish">Here\'s to a year better than any before. Happy new year!</string>
-    <string name="new_year_wish_1">It doesn\'t matter how January went. You still have the rest of the year to do better than ever.</string>
-    <string name="cheers">Cheers!</string>
     <string name="notification_bar">Notification bar</string>
 </resources>

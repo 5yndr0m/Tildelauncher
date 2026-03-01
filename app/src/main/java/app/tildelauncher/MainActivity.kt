@@ -33,7 +33,6 @@ import app.tildelauncher.helper.isTildelauncherDefault
 import app.tildelauncher.helper.isTablet
 import app.tildelauncher.helper.openUrl
 import app.tildelauncher.helper.resetLauncherViaFakeActivity
-import app.tildelauncher.helper.setPlainWallpaper
 import app.tildelauncher.helper.showLauncherSelector
 import app.tildelauncher.helper.showToast
 import kotlinx.coroutines.Job
@@ -127,11 +126,6 @@ class MainActivity : AppCompatActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         AppCompatDelegate.setDefaultNightMode(prefs.appTheme)
-        if (prefs.dailyWallpaper && AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
-            setPlainWallpaper()
-            viewModel.setWallpaperWorker()
-            recreate()
-        }
     }
 
     private fun initClickListeners() {
@@ -161,15 +155,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                Constants.Dialog.WALLPAPER -> {
-                    prefs.wallpaperMsgShown = true
-                    prefs.userState = Constants.UserState.REVIEW
-                    showMessageDialog(R.string.did_you_know, R.string.wallpaper_message, R.string.enable) {
-                        prefs.dailyWallpaper = true
-                        viewModel.setWallpaperWorker()
-                        showToast(getString(R.string.your_wallpaper_will_update_shortly))
-                    }
-                }
 
                 Constants.Dialog.REVIEW -> {
                     showMessageDialog(R.string.hey, R.string.review_message, R.string.leave_a_review) {
@@ -215,30 +200,8 @@ class MainActivity : AppCompatActivity() {
         if (prefs.firstOpenTime == 0L)
             prefs.firstOpenTime = System.currentTimeMillis()
 
-        val calendar = Calendar.getInstance()
-        val dayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
-        if (dayOfYear == 1 && dayOfYear != prefs.shownOnDayOfYear) {
-            prefs.shownOnDayOfYear = dayOfYear
-            showMessageDialog(R.string.hey, R.string.new_year_wish, R.string.cheers) {}
-            return
-        } else if (dayOfYear == 32 && dayOfYear != prefs.shownOnDayOfYear) {
-            prefs.shownOnDayOfYear = dayOfYear
-            showMessageDialog(R.string.hey, R.string.new_year_wish_1, R.string.cheers) {}
-            return
-        }
 
         when (prefs.userState) {
-            Constants.UserState.START -> {
-                if (prefs.firstOpenTime.hasBeenMinutes(10))
-                    prefs.userState = Constants.UserState.WALLPAPER
-            }
-
-            Constants.UserState.WALLPAPER -> {
-                if (prefs.wallpaperMsgShown || prefs.dailyWallpaper)
-                    prefs.userState = Constants.UserState.REVIEW
-                else if (isTildelauncherDefault(this))
-                    viewModel.showDialog.postValue(Constants.Dialog.WALLPAPER)
-            }
 
             Constants.UserState.REVIEW -> {
                 if (isTildelauncherDefault(this) && prefs.firstOpenTime.hasBeenHours(1))
@@ -262,11 +225,6 @@ class MainActivity : AppCompatActivity() {
             navController.popBackStack(R.id.mainFragment, false)
     }
 
-    private fun setPlainWallpaper() {
-        if (this.isDarkThemeOn())
-            setPlainWallpaper(this, android.R.color.black)
-        else setPlainWallpaper(this, android.R.color.white)
-    }
 
     private fun openLauncherChooser(resetFailed: Boolean) {
         if (resetFailed) {

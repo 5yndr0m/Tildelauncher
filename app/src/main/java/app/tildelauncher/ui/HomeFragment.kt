@@ -41,7 +41,6 @@ import app.tildelauncher.helper.openCalendar
 import app.tildelauncher.helper.openCameraApp
 import app.tildelauncher.helper.openDialerApp
 import app.tildelauncher.helper.openSearch
-import app.tildelauncher.helper.setPlainWallpaperByTheme
 import app.tildelauncher.helper.showToast
 import app.tildelauncher.listener.OnSwipeTouchListener
 import app.tildelauncher.listener.ViewSwipeTouchListener
@@ -176,10 +175,6 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         }
         viewModel.isTildelauncherDefault.observe(viewLifecycleOwner, Observer {
             if (it != true) {
-                if (prefs.dailyWallpaper) {
-                    prefs.dailyWallpaper = false
-                    viewModel.cancelWallpaperWorker()
-                }
                 prefs.homeBottomAlignment = false
                 setHomeAlignment()
             }
@@ -559,16 +554,6 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         }
     }
 
-    private fun changeAppTheme() {
-        if (prefs.dailyWallpaper.not()) return
-        val changedAppTheme = getChangedAppTheme(requireContext(), prefs.appTheme)
-        prefs.appTheme = changedAppTheme
-        if (prefs.dailyWallpaper) {
-            setPlainWallpaperByTheme(requireContext(), changedAppTheme)
-            viewModel.setWallpaperWorker()
-        }
-        requireActivity().recreate()
-    }
 
     private fun openScreenTimeDigitalWellbeing() {
         val intent = Intent()
