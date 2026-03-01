@@ -8,27 +8,19 @@ import android.os.UserHandle
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.work.BackoffPolicy
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import app.tildelauncher.data.AppModel
 import app.tildelauncher.data.Constants
 import app.tildelauncher.data.Prefs
 import app.tildelauncher.helper.SingleLiveEvent
-import app.tildelauncher.helper.WallpaperWorker
 import app.tildelauncher.helper.formattedTimeSpent
 import app.tildelauncher.helper.getAppsList
 import app.tildelauncher.helper.hasBeenMinutes
-import app.tildelauncher.helper.isOlauncherDefault
+import app.tildelauncher.helper.isTildelauncherDefault
 import app.tildelauncher.helper.isPackageInstalled
 import app.tildelauncher.helper.showToast
 import app.tildelauncher.helper.usageStats.EventLogWrapper
 import kotlinx.coroutines.launch
 import java.util.Calendar
-import java.util.concurrent.TimeUnit
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -41,7 +33,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val updateSwipeApps = MutableLiveData<Any>()
     val appList = MutableLiveData<List<AppModel>?>()
     val hiddenApps = MutableLiveData<List<AppModel>?>()
-    val isOlauncherDefault = MutableLiveData<Boolean>()
+    val isTildelauncherDefault = MutableLiveData<Boolean>()
     val launcherResetFailed = MutableLiveData<Boolean>()
     val homeAppAlignment = MutableLiveData<Int>()
     val screenTimeValue = MutableLiveData<String>()
@@ -369,32 +361,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun isOlauncherDefault() {
-        isOlauncherDefault.value = isOlauncherDefault(appContext)
+    fun isTildelauncherDefault() {
+        isTildelauncherDefault.value = isTildelauncherDefault(appContext)
     }
 
-    fun setWallpaperWorker() {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-        val uploadWorkRequest = PeriodicWorkRequestBuilder<WallpaperWorker>(4, TimeUnit.HOURS)
-            .setBackoffCriteria(BackoffPolicy.LINEAR, 1, TimeUnit.HOURS)
-            .setConstraints(constraints)
-            .build()
-        WorkManager
-            .getInstance(appContext)
-            .enqueueUniquePeriodicWork(
-                Constants.WALLPAPER_WORKER_NAME,
-                ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
-                uploadWorkRequest
-            )
-    }
-
-    fun cancelWallpaperWorker() {
-        WorkManager.getInstance(appContext).cancelUniqueWork(Constants.WALLPAPER_WORKER_NAME)
-        prefs.dailyWallpaperUrl = ""
-        prefs.dailyWallpaper = false
-    }
 
     fun updateHomeAlignment(gravity: Int) {
         prefs.homeAlignment = gravity

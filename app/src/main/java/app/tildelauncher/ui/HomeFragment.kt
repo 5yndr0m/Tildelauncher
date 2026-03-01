@@ -41,7 +41,6 @@ import app.tildelauncher.helper.openCalendar
 import app.tildelauncher.helper.openCameraApp
 import app.tildelauncher.helper.openDialerApp
 import app.tildelauncher.helper.openSearch
-import app.tildelauncher.helper.setPlainWallpaperByTheme
 import app.tildelauncher.helper.showToast
 import app.tildelauncher.listener.OnSwipeTouchListener
 import app.tildelauncher.listener.ViewSwipeTouchListener
@@ -81,7 +80,7 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
     override fun onResume() {
         super.onResume()
         populateHomeScreen(false)
-        viewModel.isOlauncherDefault()
+        viewModel.isTildelauncherDefault()
         if (prefs.showStatusBar) showStatusBar()
         else hideStatusBar()
     }
@@ -156,7 +155,7 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
             R.id.setDefaultLauncher -> {
                 prefs.hideSetDefaultLauncher = true
                 binding.setDefaultLauncher.visibility = View.GONE
-                if (viewModel.isOlauncherDefault.value != true) {
+                if (viewModel.isTildelauncherDefault.value != true) {
                     requireContext().showToast(R.string.set_as_default_launcher)
                     findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
                 }
@@ -174,12 +173,8 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         viewModel.refreshHome.observe(viewLifecycleOwner) {
             populateHomeScreen(it)
         }
-        viewModel.isOlauncherDefault.observe(viewLifecycleOwner, Observer {
+        viewModel.isTildelauncherDefault.observe(viewLifecycleOwner, Observer {
             if (it != true) {
-                if (prefs.dailyWallpaper) {
-                    prefs.dailyWallpaper = false
-                    viewModel.cancelWallpaperWorker()
-                }
                 prefs.homeBottomAlignment = false
                 setHomeAlignment()
             }
@@ -559,16 +554,6 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         }
     }
 
-    private fun changeAppTheme() {
-        if (prefs.dailyWallpaper.not()) return
-        val changedAppTheme = getChangedAppTheme(requireContext(), prefs.appTheme)
-        prefs.appTheme = changedAppTheme
-        if (prefs.dailyWallpaper) {
-            setPlainWallpaperByTheme(requireContext(), changedAppTheme)
-            viewModel.setWallpaperWorker()
-        }
-        requireActivity().recreate()
-    }
 
     private fun openScreenTimeDigitalWellbeing() {
         val intent = Intent()

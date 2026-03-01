@@ -18,8 +18,6 @@ class Prefs(context: Context) {
     private val HOME_APPS_NUM = "HOME_APPS_NUM"
     private val AUTO_SHOW_KEYBOARD = "AUTO_SHOW_KEYBOARD"
     private val KEYBOARD_MESSAGE = "KEYBOARD_MESSAGE"
-    private val DAILY_WALLPAPER = "DAILY_WALLPAPER"
-    private val DAILY_WALLPAPER_URL = "DAILY_WALLPAPER_URL"
     private val HOME_ALIGNMENT = "HOME_ALIGNMENT"
     private val HOME_BOTTOM_ALIGNMENT = "HOME_BOTTOM_ALIGNMENT"
     private val APP_LABEL_ALIGNMENT = "APP_LABEL_ALIGNMENT"
@@ -33,7 +31,6 @@ class Prefs(context: Context) {
     private val APP_THEME = "APP_THEME"
     private val ABOUT_CLICKED = "ABOUT_CLICKED"
     private val RATE_CLICKED = "RATE_CLICKED"
-    private val WALLPAPER_MSG_SHOWN = "WALLPAPER_MSG_SHOWN"
     private val SHARE_SHOWN_TIME = "SHARE_SHOWN_TIME"
     private val SWIPE_DOWN_ACTION = "SWIPE_DOWN_ACTION"
     private val TEXT_SIZE_SCALE = "TEXT_SIZE_SCALE"
@@ -41,7 +38,6 @@ class Prefs(context: Context) {
     private val HIDE_SET_DEFAULT_LAUNCHER = "HIDE_SET_DEFAULT_LAUNCHER"
     private val SCREEN_TIME_LAST_UPDATED = "SCREEN_TIME_LAST_UPDATED"
     private val LAUNCHER_RESTART_TIMESTAMP = "LAUNCHER_RECREATE_TIMESTAMP"
-    private val SHOWN_ON_DAY_OF_YEAR = "SHOWN_ON_DAY_OF_YEAR"
 
     private val APP_NAME_1 = "APP_NAME_1"
     private val APP_NAME_2 = "APP_NAME_2"
@@ -147,14 +143,6 @@ class Prefs(context: Context) {
         get() = prefs.getBoolean(KEYBOARD_MESSAGE, false)
         set(value) = prefs.edit { putBoolean(KEYBOARD_MESSAGE, value).apply() }
 
-    var dailyWallpaper: Boolean
-        get() = prefs.getBoolean(DAILY_WALLPAPER, false)
-        set(value) = prefs.edit { putBoolean(DAILY_WALLPAPER, value).apply() }
-
-    var dailyWallpaperUrl: String
-        get() = prefs.getString(DAILY_WALLPAPER_URL, "").toString()
-        set(value) = prefs.edit { putString(DAILY_WALLPAPER_URL, value).apply() }
-
     var homeAppsNum: Int
         get() = prefs.getInt(HOME_APPS_NUM, 4)
         set(value) = prefs.edit { putInt(HOME_APPS_NUM, value).apply() }
@@ -211,9 +199,6 @@ class Prefs(context: Context) {
         get() = prefs.getLong(LAUNCHER_RESTART_TIMESTAMP, 0L)
         set(value) = prefs.edit { putLong(LAUNCHER_RESTART_TIMESTAMP, value).apply() }
 
-    var shownOnDayOfYear: Int
-        get() = prefs.getInt(SHOWN_ON_DAY_OF_YEAR, 0)
-        set(value) = prefs.edit { putInt(SHOWN_ON_DAY_OF_YEAR, value).apply() }
 
     var hiddenApps: MutableSet<String>
         get() = prefs.getStringSet(HIDDEN_APPS, mutableSetOf()) as MutableSet<String>
@@ -234,10 +219,6 @@ class Prefs(context: Context) {
     var rateClicked: Boolean
         get() = prefs.getBoolean(RATE_CLICKED, false)
         set(value) = prefs.edit { putBoolean(RATE_CLICKED, value).apply() }
-
-    var wallpaperMsgShown: Boolean
-        get() = prefs.getBoolean(WALLPAPER_MSG_SHOWN, false)
-        set(value) = prefs.edit { putBoolean(WALLPAPER_MSG_SHOWN, value).apply() }
 
     var shareShownTime: Long
         get() = prefs.getLong(SHARE_SHOWN_TIME, 0L)
