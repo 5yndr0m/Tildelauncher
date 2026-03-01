@@ -67,7 +67,7 @@
     <style name="TextDefault" parent="@android:style/TextAppearance.Large">
         <item name="fontFamily">?attr/launcherFont</item>
         <item name="android:fontFamily">?attr/launcherFont</item>
-        <item name="android:textColor">@drawable/text_colors_default</item>
+        <item name="android:textColor">?attr/launcherTextColor</item>
         <item name="android:textColorHint">?attr/primaryColorTrans80</item>
         <item name="android:shadowColor">?attr/primaryTextShadowColor</item>
         <item name="android:shadowDx">0</item>
@@ -92,7 +92,7 @@
     </style>
 
     <style name="TextSmallLight" parent="TextSmall">
-        <item name="android:textColor">@drawable/text_colors_light</item>
+        <item name="android:textColor">?attr/launcherTextColor</item>
     </style>
 
     <!-- Color Presets (Shared with light theme) -->
