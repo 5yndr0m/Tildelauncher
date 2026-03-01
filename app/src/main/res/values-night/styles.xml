@@ -55,9 +55,9 @@
     <style name="AppSearchText" parent="Widget.AppCompat.SearchView">
         <item name="android:maxLength">200</item>
         <item name="android:textSize">@dimen/text_large</item>
-        <item name="android:textColor">?attr/primaryColor</item>
-        <item name="android:editTextColor">?attr/primaryColor</item>
-        <item name="android:textColorHint">?attr/primaryColor</item>
+        <item name="android:textColor">?attr/launcherTextColor</item>
+        <item name="android:editTextColor">?attr/launcherTextColor</item>
+        <item name="android:textColorHint">?attr/launcherTextColor</item>
         <item name="fontFamily">?attr/launcherFont</item>
         <item name="android:fontFamily">?attr/launcherFont</item>
         <item name="android:inputType">textCapSentences|textNoSuggestions</item>
