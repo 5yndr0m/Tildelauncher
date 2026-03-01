@@ -74,6 +74,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
 
         populateAppThemeText()
         populateTextSize()
+        populateFontFamilyText()
         populateAlignment()
         populateStatusBar()
         populateDateTime()
@@ -128,6 +129,16 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             R.id.notWorking -> requireContext().openUrl(Constants.URL_DOUBLE_TAP)
 
             R.id.tvGestures -> binding.flSwipeDown.visibility = View.VISIBLE
+
+            R.id.fontFamilyText -> binding.fontFamilySelectLayout.visibility = View.VISIBLE
+            R.id.fontSystem -> updateFont(R.style.FontSystem)
+            R.id.fontSans -> updateFont(R.style.FontSans)
+            R.id.fontSerif -> updateFont(R.style.FontSerif)
+            R.id.fontMono -> updateFont(R.style.FontMono)
+            R.id.fontGeist -> updateFont(R.style.FontGeist)
+            R.id.fontGeistMono -> updateFont(R.style.FontGeistMono)
+            R.id.fontGaramond -> updateFont(R.style.FontGaramond)
+            R.id.fontRoboto -> updateFont(R.style.FontRoboto)
 
             R.id.maxApps0 -> updateHomeAppsNum(0)
             R.id.maxApps1 -> updateHomeAppsNum(1)
@@ -212,6 +223,17 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         binding.themeLight.setOnClickListener(this)
         binding.themeDark.setOnClickListener(this)
         binding.themeSystem.setOnClickListener(this)
+
+        binding.fontFamilyText.setOnClickListener(this)
+        binding.fontSystem.setOnClickListener(this)
+        binding.fontSans.setOnClickListener(this)
+        binding.fontSerif.setOnClickListener(this)
+        binding.fontMono.setOnClickListener(this)
+        binding.fontGeist.setOnClickListener(this)
+        binding.fontGeistMono.setOnClickListener(this)
+        binding.fontGaramond.setOnClickListener(this)
+        binding.fontRoboto.setOnClickListener(this)
+
         binding.textSizeValue.setOnClickListener(this)
         binding.actionAccessibility.setOnClickListener(this)
         binding.closeAccessibility.setOnClickListener(this)
@@ -465,6 +487,28 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             AppCompatDelegate.MODE_NIGHT_NO -> binding.appThemeText.text = getString(R.string.light)
             else -> binding.appThemeText.text = getString(R.string.system_default)
         }
+    }
+
+    private fun updateFont(fontId: Int) {
+        if (prefs.appFont == fontId) return
+        prefs.appFont = fontId
+        populateFontFamilyText(fontId)
+        requireActivity().recreate()
+    }
+
+    private fun populateFontFamilyText(fontId: Int = prefs.appFont) {
+        binding.fontFamilyText.text = getString(
+            when (fontId) {
+                R.style.FontSans -> R.string.sans_serif
+                R.style.FontSerif -> R.string.serif
+                R.style.FontMono -> R.string.monospace
+                R.style.FontGeist -> R.string.geist
+                R.style.FontGeistMono -> R.string.geist_mono
+                R.style.FontGaramond -> R.string.garamond
+                R.style.FontRoboto -> R.string.roboto
+                else -> R.string.system
+            }
+        )
     }
 
     private fun populateTextSize() {
