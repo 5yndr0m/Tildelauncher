@@ -1,3 +1,28 @@
+## Tilde (Olauncher Fork)
+
+This is a personal fork of [Olauncher](https://github.com/tanujnotes/Olauncher), modified to fit my specific tastes and workflow.
+
+### Why this fork exists?
+
+I am a React Native developer diving into native Android development for the first time. I’m using this project as a "living laboratory" to:
+
+* **Add/Remove Features:** Stripping down or adding utility to match my minimalist aesthetic.
+* **Learn Kotlin & Jetpack Compose:** Transitioning from declarative JS to native Android patterns.
+* **Linux-First Dev:** Built and maintained on **Arch Linux** using the **Niri** compositor.
+
+### Status: Work in Progress 
+
+This is an ongoing project. Development is slow and intentional as I learn the ropes of the Android SDK. Expect frequent breaks, experimental commits, and a bit of "learning out loud" in the code.
+
+### Credits & Licensing
+
+The heavy lifting and original brilliance belong to the **Olauncher developers**. This project wouldn't exist without their clean, open-source foundation.
+
+* Original Project: [Olauncher](https://github.com/tanujnotes/Olauncher)
+* License: [GPL-3.0](https://www.google.com/search?q=LICENSE) (Inherited from the original project)
+
+---
+
 ![Olauncher](https://repository-images.githubusercontent.com/278638069/db0acb80-661b-11eb-803e-926cae5dccb4)
 
 
