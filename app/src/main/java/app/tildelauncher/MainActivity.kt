@@ -32,10 +32,8 @@ import app.tildelauncher.helper.isEinkDisplay
 import app.tildelauncher.helper.isTildelauncherDefault
 import app.tildelauncher.helper.isTablet
 import app.tildelauncher.helper.openUrl
-import app.tildelauncher.helper.rateApp
 import app.tildelauncher.helper.resetLauncherViaFakeActivity
 import app.tildelauncher.helper.setPlainWallpaper
-import app.tildelauncher.helper.shareApp
 import app.tildelauncher.helper.showLauncherSelector
 import app.tildelauncher.helper.showToast
 import kotlinx.coroutines.Job
@@ -174,30 +172,13 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 Constants.Dialog.REVIEW -> {
-                    prefs.userState = Constants.UserState.RATE
                     showMessageDialog(R.string.hey, R.string.review_message, R.string.leave_a_review) {
                         prefs.rateClicked = true
                         showToast("😇❤️")
-                        rateApp()
                     }
                 }
 
-                Constants.Dialog.RATE -> {
-                    prefs.userState = Constants.UserState.SHARE
-                    showMessageDialog(R.string.app_name, R.string.rate_us_message, R.string.rate_now) {
-                        prefs.rateClicked = true
-                        showToast("🤩❤️")
-                        rateApp()
-                    }
-                }
 
-                Constants.Dialog.SHARE -> {
-                    prefs.shareShownTime = System.currentTimeMillis()
-                    showMessageDialog(R.string.hey, R.string.share_message, R.string.share_now) {
-                        showToast("😊❤️")
-                        shareApp()
-                    }
-                }
 
                 Constants.Dialog.HIDDEN -> {
                     showMessageDialog(R.string.hidden_apps, R.string.hidden_apps_message, R.string.okay) {
@@ -265,27 +246,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             Constants.UserState.REVIEW -> {
-                if (prefs.rateClicked)
-                    prefs.userState = Constants.UserState.SHARE
-                else if (isTildelauncherDefault(this) && prefs.firstOpenTime.hasBeenHours(1))
+                if (isTildelauncherDefault(this) && prefs.firstOpenTime.hasBeenHours(1))
                     viewModel.showDialog.postValue(Constants.Dialog.REVIEW)
             }
 
-            Constants.UserState.RATE -> {
-                if (prefs.rateClicked)
-                    prefs.userState = Constants.UserState.SHARE
-                else if (isTildelauncherDefault(this)
-                    && prefs.firstOpenTime.isDaySince() >= 7
-                    && calendar.get(Calendar.HOUR_OF_DAY) >= 16
-                ) viewModel.showDialog.postValue(Constants.Dialog.RATE)
-            }
-
-            Constants.UserState.SHARE -> {
-                if (isTildelauncherDefault(this) && prefs.firstOpenTime.hasBeenDays(14)
-                    && prefs.shareShownTime.isDaySince() >= 70
-                    && calendar.get(Calendar.HOUR_OF_DAY) >= 16
-                ) viewModel.showDialog.postValue(Constants.Dialog.SHARE)
-            }
         }
     }
 

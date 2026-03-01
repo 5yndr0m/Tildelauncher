@@ -36,9 +36,7 @@ import app.tildelauncher.helper.isTildelauncherDefault
 import app.tildelauncher.helper.isTablet
 import app.tildelauncher.helper.openAppInfo
 import app.tildelauncher.helper.openUrl
-import app.tildelauncher.helper.rateApp
 import app.tildelauncher.helper.setPlainWallpaper
-import app.tildelauncher.helper.shareApp
 import app.tildelauncher.helper.showToast
 import app.tildelauncher.listener.DeviceAdmin
 
@@ -157,16 +155,10 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
                 requireContext().openUrl(Constants.URL_ABOUT_TILDELAUNCHER)
             }
 
-            R.id.share -> requireActivity().shareApp()
-            R.id.rate -> {
-                prefs.rateClicked = true
-                requireActivity().rateApp()
-            }
 
             R.id.twitter -> requireContext().openUrl(Constants.URL_TWITTER_TANUJ)
             R.id.github -> requireContext().openUrl(Constants.URL_TILDELAUNCHER_GITHUB)
             R.id.privacy -> requireContext().openUrl(Constants.URL_TILDELAUNCHER_PRIVACY)
-            R.id.footer -> requireContext().openUrl(Constants.URL_NTS)
         }
     }
 
@@ -228,12 +220,9 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         binding.closeAccessibility.setOnClickListener(this)
         binding.notWorking.setOnClickListener(this)
 
-        binding.share.setOnClickListener(this)
-        binding.rate.setOnClickListener(this)
         binding.twitter.setOnClickListener(this)
         binding.github.setOnClickListener(this)
         binding.privacy.setOnClickListener(this)
-        binding.footer.setOnClickListener(this)
 
         binding.maxApps0.setOnClickListener(this)
         binding.maxApps1.setOnClickListener(this)
@@ -634,13 +623,10 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
     private fun populateActionHints() {
         if (prefs.aboutClicked.not())
             binding.aboutTildelauncher.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_info, 0)
-        if (viewModel.isTildelauncherDefault.value != true) return
-        if (prefs.rateClicked.not() && prefs.toShowHintCounter > Constants.HINT_RATE_US && prefs.toShowHintCounter < Constants.HINT_RATE_US + 100)
-            binding.rate.setCompoundDrawablesWithIntrinsicBounds(0, android.R.drawable.arrow_down_float, 0, 0)
     }
 
     private fun populateProMessage() {
-        if (prefs.proMessageShown.not() && prefs.userState == Constants.UserState.SHARE) {
+        if (prefs.proMessageShown.not()) {
             prefs.proMessageShown = true
             viewModel.showDialog.postValue(Constants.Dialog.PRO_MESSAGE)
         }

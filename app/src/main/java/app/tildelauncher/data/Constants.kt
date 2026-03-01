@@ -11,8 +11,6 @@ object Constants {
         const val ABOUT = "ABOUT"
         const val WALLPAPER = "WALLPAPER"
         const val REVIEW = "REVIEW"
-        const val RATE = "RATE"
-        const val SHARE = "SHARE"
         const val HIDDEN = "HIDDEN"
         const val KEYBOARD = "KEYBOARD"
         const val DIGITAL_WELLBEING = "DIGITAL_WELLBEING"
@@ -23,8 +21,6 @@ object Constants {
         const val START = "START"
         const val WALLPAPER = "WALLPAPER"
         const val REVIEW = "REVIEW"
-        const val RATE = "RATE"
-        const val SHARE = "SHARE"
     }
 
     object DateTime {
@@ -98,12 +94,10 @@ object Constants {
     const val URL_TILDELAUNCHER_PRIVACY = "https://tanujnotes.notion.site/Olauncher-Privacy-Policy-dd6ac5101ddd4b3da9d27057889d44ab"
     const val URL_DOUBLE_TAP = "https://tanujnotes.notion.site/Double-tap-to-lock-Olauncher-0f7fb103ec1f47d7a90cdfdcd7fb86ef"
     const val URL_TILDELAUNCHER_GITHUB = "https://www.github.com/tanujnotes/Olauncher"
-    const val URL_TILDELAUNCHER_PLAY_STORE = "https://play.google.com/store/apps/details?id=app.tildelauncher"
     const val URL_TILDELAUNCHER_PRO = "https://play.google.com/store/apps/details?id=app.prtildelauncher"
     const val URL_PLAY_STORE_DEV = "https://play.google.com/store/apps/dev?id=7198807840081074933"
     const val URL_TWITTER_TANUJ = "https://x.com/tanujnotes"
     const val URL_WALLPAPERS = "https://gist.githubusercontent.com/tanujnotes/85e2d0343ace71e76615ac346fbff82b/raw"
-    const val URL_NTS = "https://play.google.com/store/apps/details?id=com.makenotetoself"
     const val URL_DEFAULT_DARK_WALLPAPER = "https://images.unsplash.com/photo-1512551980832-13df02babc9e"
     const val URL_DEFAULT_LIGHT_WALLPAPER = "https://images.unsplash.com/photo-1515549832467-8783363e19b6"
     const val URL_DUCK_SEARCH = "https://duck.co/?q="
