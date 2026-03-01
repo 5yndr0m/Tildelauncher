@@ -42,6 +42,7 @@
         <item name="primaryShadeColor">@color/blackInverseTrans10</item>
         <item name="primaryShadeDarkColor">@color/blackInverseTrans25</item>
         <item name="dialogShadeColor">@color/blackInverseTrans50</item>
+        <item name="launcherFont">sans-serif-light</item>
 
     </style>
 
@@ -50,18 +51,51 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
+    <style name="FontSystem">
+        <item name="launcherFont">sans-serif-light</item>
+    </style>
+
+    <style name="FontSans">
+        <item name="launcherFont">sans-serif</item>
+    </style>
+
+    <style name="FontSerif">
+        <item name="launcherFont">serif</item>
+    </style>
+
+    <style name="FontMono">
+        <item name="launcherFont">monospace</item>
+    </style>
+
+    <style name="FontGeist">
+        <item name="launcherFont">@font/geist</item>
+    </style>
+
+    <style name="FontGeistMono">
+        <item name="launcherFont">@font/geist_mono</item>
+    </style>
+
+    <style name="FontGaramond">
+        <item name="launcherFont">@font/eb_garamond</item>
+    </style>
+
+    <style name="FontRoboto">
+        <item name="launcherFont">@font/roboto</item>
+    </style>
+
     <style name="AppSearchText" parent="Widget.AppCompat.SearchView">
         <item name="android:maxLength">200</item>
         <item name="android:textSize">@dimen/text_large</item>
         <item name="android:textColor">?attr/primaryColor</item>
         <item name="android:editTextColor">?attr/primaryColor</item>
         <item name="android:textColorHint">?attr/primaryColor</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">?attr/launcherFont</item>
         <item name="android:inputType">textCapSentences|textNoSuggestions</item>
         <item name="android:cursorVisible">false</item>
     </style>
 
     <style name="TextDefault" parent="@android:style/TextAppearance.Large">
+        <item name="android:fontFamily">?attr/launcherFont</item>
         <item name="android:textColor">@drawable/text_colors_default</item>
         <item name="android:textColorHint">?attr/primaryColorTrans80</item>
         <item name="android:shadowColor">?attr/primaryTextShadowColor</item>
@@ -71,7 +105,6 @@
     </style>
 
     <style name="TextLarge" parent="TextDefault">
-        <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
