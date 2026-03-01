@@ -148,164 +148,6 @@
                         android:text="@string/font_family"
                         app:drawableStartCompat="@drawable/ic_text_fields" />
 
-                    <!-- text color select row-->
-                    <LinearLayout
-                        android:id="@+id/textColorRow"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="12dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_color_lens"
-                            app:tint="?attr/primaryColor" />
-
-                        <TextView
-                            style="@style/TextMedium"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_weight="1"
-                            android:text="@string/settings_text_color"
-                            android:textColor="?attr/primaryColor" />
-
-                        <TextView
-                            android:id="@+id/tvTextColorSelection"
-                            style="@style/TextSmallBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_primary_gradient"
-                            android:backgroundTint="?attr/primaryColor"
-                            android:elevation="4dp"
-                            android:paddingHorizontal="12dp"
-                            android:paddingVertical="4dp"
-                            android:text="@string/system"
-                            android:textColor="?attr/primaryInverseColor" />
-                    </LinearLayout>
-
-                    <!-- text color select layout-->
-                    <HorizontalScrollView
-                        android:id="@+id/textColorSelectLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_primary_gradient"
-                        android:elevation="8dp"
-                        android:scrollbars="none"
-                        android:visibility="gone"
-                        tools:ignore="UnusedAttribute">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:paddingHorizontal="12dp"
-                            android:paddingVertical="8dp">
-
-                            <!-- White -->
-                            <View
-                                android:id="@+id/colorWhite"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_margin="4dp"
-                                android:background="@drawable/circle_white"
-                                android:elevation="4dp" />
-
-                            <!-- Black -->
-                            <View
-                                android:id="@+id/colorBlack"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_margin="4dp"
-                                android:background="@drawable/circle_black"
-                                android:elevation="4dp" />
-
-                            <!-- Gray -->
-                            <View
-                                android:id="@+id/colorGray"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_margin="4dp"
-                                android:background="@drawable/circle_gray"
-                                android:elevation="4dp" />
-
-                            <!-- Red -->
-                            <View
-                                android:id="@+id/colorRed"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_margin="4dp"
-                                android:background="@drawable/circle_red"
-                                android:elevation="4dp" />
-
-                            <!-- Blue -->
-                            <View
-                                android:id="@+id/colorBlue"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_margin="4dp"
-                                android:background="@drawable/circle_blue"
-                                android:elevation="4dp" />
-
-                            <!-- Green -->
-                            <View
-                                android:id="@+id/colorGreen"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_margin="4dp"
-                                android:background="@drawable/circle_green"
-                                android:elevation="4dp" />
-
-                            <!-- Yellow -->
-                            <View
-                                android:id="@+id/colorYellow"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_margin="4dp"
-                                android:background="@drawable/circle_yellow"
-                                android:elevation="4dp" />
-
-                            <!-- Orange -->
-                            <View
-                                android:id="@+id/colorOrange"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_margin="4dp"
-                                android:background="@drawable/circle_orange"
-                                android:elevation="4dp" />
-
-                            <!-- Purple -->
-                            <View
-                                android:id="@+id/colorPurple"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_margin="4dp"
-                                android:background="@drawable/circle_purple"
-                                android:elevation="4dp" />
-
-                            <!-- Pink -->
-                            <View
-                                android:id="@+id/colorPink"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_margin="4dp"
-                                android:background="@drawable/circle_pink"
-                                android:elevation="4dp" />
-
-                            <!-- Teal -->
-                            <View
-                                android:id="@+id/colorTeal"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_margin="4dp"
-                                android:background="@drawable/circle_teal"
-                                android:elevation="4dp" />
-                        </LinearLayout>
-                    </HorizontalScrollView>
 
                     <!-- Home apps numbers layout-->
                     <LinearLayout
@@ -831,6 +673,152 @@
                                 android:text="@string/roboto"
                                 android:textColor="@color/white" />
 
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/textColorRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/settings_text_color"
+                        android:textColor="?attr/primaryColor" />
+
+                    <TextView
+                        android:id="@+id/tvTextColorSelection"
+                        style="@style/TextSmallBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginEnd="4dp"
+                        android:padding="8dp"
+                        android:text="@string/system" />
+
+                    <!-- text color select layout-->
+                    <HorizontalScrollView
+                        android:id="@+id/textColorSelectLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_primary_gradient"
+                        android:elevation="8dp"
+                        android:scrollbars="none"
+                        android:visibility="gone"
+                        tools:ignore="UnusedAttribute">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="8dp">
+
+                            <!-- White -->
+                            <View
+                                android:id="@+id/colorWhite"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_white"
+                                android:elevation="4dp" />
+
+                            <!-- Black -->
+                            <View
+                                android:id="@+id/colorBlack"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_black"
+                                android:elevation="4dp" />
+
+                            <!-- Gray -->
+                            <View
+                                android:id="@+id/colorGray"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_gray"
+                                android:elevation="4dp" />
+
+                            <!-- Red -->
+                            <View
+                                android:id="@+id/colorRed"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_red"
+                                android:elevation="4dp" />
+
+                            <!-- Blue -->
+                            <View
+                                android:id="@+id/colorBlue"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_blue"
+                                android:elevation="4dp" />
+
+                            <!-- Green -->
+                            <View
+                                android:id="@+id/colorGreen"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_green"
+                                android:elevation="4dp" />
+
+                            <!-- Yellow -->
+                            <View
+                                android:id="@+id/colorYellow"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_yellow"
+                                android:elevation="4dp" />
+
+                            <!-- Orange -->
+                            <View
+                                android:id="@+id/colorOrange"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_orange"
+                                android:elevation="4dp" />
+
+                            <!-- Purple -->
+                            <View
+                                android:id="@+id/colorPurple"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_purple"
+                                android:elevation="4dp" />
+
+                            <!-- Pink -->
+                            <View
+                                android:id="@+id/colorPink"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_pink"
+                                android:elevation="4dp" />
+
+                            <!-- Teal -->
+                            <View
+                                android:id="@+id/colorTeal"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_margin="4dp"
+                                android:background="@drawable/circle_teal"
+                                android:elevation="4dp" />
                         </LinearLayout>
                     </HorizontalScrollView>
                 </FrameLayout>
