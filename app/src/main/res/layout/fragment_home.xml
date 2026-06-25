@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
@@ -72,11 +73,11 @@
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
         android:paddingTop="112dp"
-        android:paddingBottom="48dp">
+        android:paddingBottom="112dp">
 
         <TextView
             android:id="@+id/homeApp1"
-            style="@style/TextLarge"
+            style="@style/TextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/app"
@@ -87,7 +88,7 @@
 
         <TextView
             android:id="@+id/homeApp2"
-            style="@style/TextLarge"
+            style="@style/TextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/app"
@@ -98,7 +99,7 @@
 
         <TextView
             android:id="@+id/homeApp3"
-            style="@style/TextLarge"
+            style="@style/TextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/app"
@@ -109,7 +110,7 @@
 
         <TextView
             android:id="@+id/homeApp4"
-            style="@style/TextLarge"
+            style="@style/TextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/app"
@@ -120,7 +121,7 @@
 
         <TextView
             android:id="@+id/homeApp5"
-            style="@style/TextLarge"
+            style="@style/TextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/app"
@@ -131,7 +132,7 @@
 
         <TextView
             android:id="@+id/homeApp6"
-            style="@style/TextLarge"
+            style="@style/TextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/app"
@@ -142,7 +143,7 @@
 
         <TextView
             android:id="@+id/homeApp7"
-            style="@style/TextLarge"
+            style="@style/TextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/app"
@@ -153,7 +154,7 @@
 
         <TextView
             android:id="@+id/homeApp8"
-            style="@style/TextLarge"
+            style="@style/TextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/app"
@@ -162,7 +163,98 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
+        <!-- Dynamic usage-based app slots -->
+        <TextView
+            android:id="@+id/homeAppDynamic1"
+            style="@style/TextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/home_app_padding_vertical"
+            android:tag="@string/tag_9"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/homeAppDynamic2"
+            style="@style/TextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/home_app_padding_vertical"
+            android:tag="@string/tag_10"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/homeAppDynamic3"
+            style="@style/TextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/home_app_padding_vertical"
+            android:tag="@string/tag_11"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/homeAppDynamic4"
+            style="@style/TextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/home_app_padding_vertical"
+            android:tag="@string/tag_12"
+            android:visibility="gone" />
+
     </LinearLayout>
+
+    <!-- At-a-Glance bar -->
+    <LinearLayout
+        android:id="@+id/atAGlanceBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/tvWeather"
+            style="@style/TextSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingVertical="8dp"
+            android:visibility="gone"
+            tools:text="18° Clouds"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tvMediaPlayer"
+            style="@style/TextSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:paddingStart="8dp"
+            android:paddingVertical="8dp"
+            android:text="&#9834;"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+    <!-- FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/fab_margin_bottom"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/fab"
+        android:src="@drawable/ic_fab"
+        android:visibility="gone"
+        app:backgroundTint="?attr/primaryShadeDarkColor"
+        app:elevation="4dp"
+        app:fabSize="mini"
+        app:tint="?attr/launcherTextColor" />
 
     <TextView
         android:id="@+id/firstRunTips"

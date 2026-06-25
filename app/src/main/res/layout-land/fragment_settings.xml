@@ -12,12 +12,12 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginVertical="8dp"
         android:animateLayoutChanges="true"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:fadingEdgeLength="24dp"
+        android:fadingEdgeLength="48dp"
         android:overScrollMode="never"
-        android:paddingHorizontal="100dp"
         android:requiresFadingEdge="vertical"
         android:scrollbars="none">
 
@@ -28,8 +28,9 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:paddingVertical="56dp">
+            android:paddingVertical="64dp">
 
+            <!-- ── Card 1: App ── -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,7 +42,8 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
 
                     <TextView
                         android:id="@+id/tildelauncherHiddenApps"
@@ -82,13 +84,14 @@
                     android:gravity="center"
                     android:text="@string/about_tildelauncher" />
 
-
             </LinearLayout>
 
+            <!-- ── Card 2: Home Screen ── -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/rounded_rect_shade_color"
                 android:clipChildren="false"
                 android:clipToPadding="false"
@@ -100,10 +103,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="12dp"
                     android:text="@string/home_screen"
                     android:textColor="?attr/launcherTextColor" />
 
+                <!-- Apps on home screen -->
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -128,9 +132,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|bottom"
                         android:layout_marginEnd="4dp"
-                        android:padding="8dp" />
+                        android:paddingVertical="8dp"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="8dp"
+                        tools:text="@string/_8" />
 
-                    <!-- Home apps numbers layout-->
                     <LinearLayout
                         android:id="@+id/appsNumSelectLayout"
                         android:layout_width="match_parent"
@@ -238,6 +244,7 @@
 
                 </FrameLayout>
 
+                <!-- Date/time -->
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -263,7 +270,6 @@
                         android:padding="8dp"
                         android:text="@string/on" />
 
-                    <!-- date time layout-->
                     <LinearLayout
                         android:id="@+id/dateTimeSelectLayout"
                         android:layout_width="match_parent"
@@ -318,6 +324,7 @@
 
                 </FrameLayout>
 
+                <!-- Alignment -->
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -345,9 +352,279 @@
                         android:padding="8dp"
                         android:text="@string/left" />
 
-                    <!-- alignment layout-->
-                    <LinearLayout
+                    <HorizontalScrollView
                         android:id="@+id/alignmentSelectLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:animateLayoutChanges="true"
+                        android:background="@drawable/rounded_primary_gradient"
+                        android:elevation="8dp"
+                        android:fadingEdgeLength="8dp"
+                        android:outlineAmbientShadowColor="@color/colorPrimaryDark"
+                        android:outlineSpotShadowColor="@color/colorPrimaryDark"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="2dp"
+                        android:requiresFadingEdge="horizontal"
+                        android:visibility="gone"
+                        tools:ignore="UnusedAttribute">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:orientation="horizontal">
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/alignmentBottom"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:paddingVertical="6dp"
+                                android:text="@string/bottom_off" />
+
+                            <View
+                                android:layout_width="0.5dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="4dp"
+                                android:layout_marginEnd="16dp"
+                                android:background="?attr/primaryColorTrans50" />
+
+                            <TextView
+                                android:id="@+id/alignmentLeft"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:gravity="center"
+                                android:paddingVertical="6dp"
+                                android:text="@string/left" />
+
+                            <TextView
+                                android:id="@+id/alignmentCenter"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginEnd="16dp"
+                                android:gravity="center"
+                                android:paddingVertical="6dp"
+                                android:text="@string/center" />
+
+                            <TextView
+                                android:id="@+id/alignmentRight"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:paddingVertical="6dp"
+                                android:text="@string/right" />
+
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                </FrameLayout>
+
+                <!-- Status bar -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/notification_bar"
+                        android:textColor="?attr/launcherTextColor" />
+
+                    <TextView
+                        android:id="@+id/statusBar"
+                        style="@style/TextSmallBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginEnd="4dp"
+                        android:padding="8dp"
+                        android:text="@string/off" />
+                </FrameLayout>
+
+                <!-- Suggested (dynamic) apps toggle -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/suggested_apps"
+                        android:textColor="?attr/launcherTextColor" />
+
+                    <TextView
+                        android:id="@+id/dynamicAppsOnOff"
+                        style="@style/TextSmallBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginEnd="4dp"
+                        android:padding="8dp"
+                        android:text="@string/off" />
+                </FrameLayout>
+
+                <!-- Suggested apps count (shown only when enabled) -->
+                <FrameLayout
+                    android:id="@+id/dynamicAppsCountLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp"
+                    android:animateLayoutChanges="true"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/suggested_apps_count"
+                        android:textColor="?attr/launcherTextColor" />
+
+                    <TextView
+                        android:id="@+id/dynamicAppsNum"
+                        style="@style/TextSmallBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginEnd="4dp"
+                        android:paddingVertical="8dp"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="8dp"
+                        tools:text="3" />
+
+                    <LinearLayout
+                        android:id="@+id/dynamicAppsNumSelectLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:animateLayoutChanges="true"
+                        android:background="@drawable/rounded_primary_gradient"
+                        android:elevation="8dp"
+                        android:orientation="horizontal"
+                        android:outlineAmbientShadowColor="@color/colorPrimaryDark"
+                        android:outlineSpotShadowColor="@color/colorPrimaryDark"
+                        android:visibility="gone"
+                        tools:ignore="UnusedAttribute">
+
+                        <TextView
+                            android:id="@+id/dynApps1"
+                            style="@style/TextSmall"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingVertical="8dp"
+                            android:text="@string/_1" />
+
+                        <TextView
+                            android:id="@+id/dynApps2"
+                            style="@style/TextSmall"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingVertical="8dp"
+                            android:text="@string/_2" />
+
+                        <TextView
+                            android:id="@+id/dynApps3"
+                            style="@style/TextSmall"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingVertical="8dp"
+                            android:text="@string/_3" />
+
+                        <TextView
+                            android:id="@+id/dynApps4"
+                            style="@style/TextSmall"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingVertical="8dp"
+                            android:text="@string/_4" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <!-- ── Card 3: Appearance ── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/rounded_rect_shade_color"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    style="@style/TextLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/appearance"
+                    android:textColor="?attr/launcherTextColor" />
+
+                <!-- Theme -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/theme_mode"
+                        android:textColor="?attr/launcherTextColor" />
+
+                    <TextView
+                        android:id="@+id/appThemeText"
+                        style="@style/TextSmallBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginEnd="4dp"
+                        android:padding="8dp"
+                        android:text="@string/dark" />
+
+                    <LinearLayout
+                        android:id="@+id/appThemeSelectLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:animateLayoutChanges="true"
@@ -367,159 +644,40 @@
                             android:layout_weight="1" />
 
                         <TextView
-                            android:id="@+id/alignmentBottom"
-                            style="@style/TextSmallBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="24dp"
-                            android:paddingVertical="6dp"
-                            android:text="@string/bottom_off" />
-
-                        <View
-                            android:layout_width="0.5dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginVertical="4dp"
-                            android:layout_marginEnd="24dp"
-                            android:background="?attr/primaryColorTrans50" />
-
-                        <TextView
-                            android:id="@+id/alignmentLeft"
+                            android:id="@+id/themeSystem"
                             style="@style/TextSmallBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="24dp"
                             android:gravity="center"
                             android:paddingVertical="6dp"
-                            android:text="@string/left" />
+                            android:text="@string/system_default"
+                            android:visibility="gone" />
 
                         <TextView
-                            android:id="@+id/alignmentCenter"
+                            android:id="@+id/themeLight"
                             style="@style/TextSmallBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
                             android:layout_marginEnd="24dp"
                             android:gravity="center"
                             android:paddingVertical="6dp"
-                            android:text="@string/center" />
+                            android:text="@string/light" />
 
                         <TextView
-                            android:id="@+id/alignmentRight"
+                            android:id="@+id/themeDark"
                             style="@style/TextSmallBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:paddingVertical="6dp"
-                            android:text="@string/right" />
+                            android:text="@string/dark" />
 
                     </LinearLayout>
 
                 </FrameLayout>
 
-                <FrameLayout
-                    android:id="@+id/screenTimeLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:animateLayoutChanges="true"
-                    android:clipChildren="false"
-                    android:clipToPadding="false">
-
-                    <TextView
-                        style="@style/TextSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:paddingVertical="8dp"
-                        android:text="@string/screen_time"
-                        android:textColor="?attr/launcherTextColor" />
-
-                    <TextView
-                        android:id="@+id/screenTimeOnOff"
-                        style="@style/TextSmallBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|bottom"
-                        android:layout_marginEnd="4dp"
-                        android:padding="8dp"
-                        android:text="@string/left" />
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:background="@drawable/rounded_rect_shade_color"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <TextView
-                    style="@style/TextLarge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/appearance"
-                    android:textColor="?attr/launcherTextColor" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:animateLayoutChanges="true">
-
-                    <TextView
-                        style="@style/TextSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:paddingVertical="8dp"
-                        android:text="@string/auto_show_keyboard"
-                        android:textColor="?attr/launcherTextColor" />
-
-                    <TextView
-                        android:id="@+id/autoShowKeyboard"
-                        style="@style/TextSmallBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|bottom"
-                        android:layout_marginEnd="4dp"
-                        android:padding="8dp"
-                        android:text="@string/on" />
-                </FrameLayout>
-
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:animateLayoutChanges="true">
-
-                    <TextView
-                        style="@style/TextSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:paddingVertical="8dp"
-                        android:text="@string/status_bar"
-                        android:textColor="?attr/launcherTextColor" />
-
-                    <TextView
-                        android:id="@+id/statusBar"
-                        style="@style/TextSmallBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|bottom"
-                        android:layout_marginEnd="4dp"
-                        android:padding="8dp"
-                        android:text="@string/off" />
-                </FrameLayout>
-
+                <!-- Font family -->
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -545,7 +703,6 @@
                         android:padding="8dp"
                         android:text="@string/system" />
 
-                    <!-- font family select layout-->
                     <HorizontalScrollView
                         android:id="@+id/fontFamilySelectLayout"
                         android:layout_width="match_parent"
@@ -649,85 +806,7 @@
                     </HorizontalScrollView>
                 </FrameLayout>
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:animateLayoutChanges="true">
-
-                    <TextView
-                        style="@style/TextSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:paddingVertical="8dp"
-                        android:text="@string/theme_mode"
-                        android:textColor="?attr/launcherTextColor" />
-
-                    <TextView
-                        android:id="@+id/appThemeText"
-                        style="@style/TextSmallBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|bottom"
-                        android:layout_marginEnd="4dp"
-                        android:padding="8dp"
-                        android:text="@string/dark" />
-
-                    <!-- theme color select layout-->
-                    <LinearLayout
-                        android:id="@+id/appThemeSelectLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:animateLayoutChanges="true"
-                        android:background="@drawable/rounded_primary_gradient"
-                        android:elevation="8dp"
-                        android:orientation="horizontal"
-                        android:outlineAmbientShadowColor="@color/colorPrimaryDark"
-                        android:outlineSpotShadowColor="@color/colorPrimaryDark"
-                        android:paddingHorizontal="12dp"
-                        android:paddingVertical="2dp"
-                        android:visibility="gone"
-                        tools:ignore="UnusedAttribute">
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/themeSystem"
-                            style="@style/TextSmallBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="24dp"
-                            android:gravity="center"
-                            android:paddingVertical="6dp"
-                            android:text="@string/system_default" />
-
-                        <TextView
-                            android:id="@+id/themeLight"
-                            style="@style/TextSmallBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="24dp"
-                            android:gravity="center"
-                            android:paddingVertical="6dp"
-                            android:text="@string/light" />
-
-                        <TextView
-                            android:id="@+id/themeDark"
-                            style="@style/TextSmallBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:paddingVertical="6dp"
-                            android:text="@string/dark" />
-
-                    </LinearLayout>
-
-                </FrameLayout>
-
+                <!-- Text color -->
                 <FrameLayout
                     android:id="@+id/textColorRow"
                     android:layout_width="match_parent"
@@ -754,7 +833,6 @@
                         android:padding="8dp"
                         android:text="@string/system" />
 
-                    <!-- text color select layout-->
                     <HorizontalScrollView
                         android:id="@+id/textColorSelectLayout"
                         android:layout_width="match_parent"
@@ -774,7 +852,6 @@
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="8dp">
 
-                            <!-- White -->
                             <View
                                 android:id="@+id/colorWhite"
                                 android:layout_width="32dp"
@@ -783,7 +860,6 @@
                                 android:background="@drawable/circle_white"
                                 android:elevation="4dp" />
 
-                            <!-- Black -->
                             <View
                                 android:id="@+id/colorBlack"
                                 android:layout_width="32dp"
@@ -792,7 +868,6 @@
                                 android:background="@drawable/circle_black"
                                 android:elevation="4dp" />
 
-                            <!-- Gray -->
                             <View
                                 android:id="@+id/colorGray"
                                 android:layout_width="32dp"
@@ -801,7 +876,6 @@
                                 android:background="@drawable/circle_gray"
                                 android:elevation="4dp" />
 
-                            <!-- Red -->
                             <View
                                 android:id="@+id/colorRed"
                                 android:layout_width="32dp"
@@ -810,7 +884,6 @@
                                 android:background="@drawable/circle_red"
                                 android:elevation="4dp" />
 
-                            <!-- Blue -->
                             <View
                                 android:id="@+id/colorBlue"
                                 android:layout_width="32dp"
@@ -819,7 +892,6 @@
                                 android:background="@drawable/circle_blue"
                                 android:elevation="4dp" />
 
-                            <!-- Green -->
                             <View
                                 android:id="@+id/colorGreen"
                                 android:layout_width="32dp"
@@ -828,7 +900,6 @@
                                 android:background="@drawable/circle_green"
                                 android:elevation="4dp" />
 
-                            <!-- Yellow -->
                             <View
                                 android:id="@+id/colorYellow"
                                 android:layout_width="32dp"
@@ -837,7 +908,6 @@
                                 android:background="@drawable/circle_yellow"
                                 android:elevation="4dp" />
 
-                            <!-- Orange -->
                             <View
                                 android:id="@+id/colorOrange"
                                 android:layout_width="32dp"
@@ -846,7 +916,6 @@
                                 android:background="@drawable/circle_orange"
                                 android:elevation="4dp" />
 
-                            <!-- Purple -->
                             <View
                                 android:id="@+id/colorPurple"
                                 android:layout_width="32dp"
@@ -855,7 +924,6 @@
                                 android:background="@drawable/circle_purple"
                                 android:elevation="4dp" />
 
-                            <!-- Pink -->
                             <View
                                 android:id="@+id/colorPink"
                                 android:layout_width="32dp"
@@ -864,7 +932,6 @@
                                 android:background="@drawable/circle_pink"
                                 android:elevation="4dp" />
 
-                            <!-- Teal -->
                             <View
                                 android:id="@+id/colorTeal"
                                 android:layout_width="32dp"
@@ -876,6 +943,7 @@
                     </HorizontalScrollView>
                 </FrameLayout>
 
+                <!-- Text size -->
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -906,7 +974,6 @@
                         android:paddingEnd="8dp"
                         tools:text="1.0" />
 
-                    <!-- Text size +/- controls -->
                     <LinearLayout
                         android:id="@+id/textSizesLayout"
                         android:layout_width="match_parent"
@@ -919,8 +986,7 @@
                         android:outlineAmbientShadowColor="@color/colorPrimaryDark"
                         android:outlineSpotShadowColor="@color/colorPrimaryDark"
                         android:visibility="gone"
-                        tools:ignore="UnusedAttribute"
-                        tools:visibility="gone">
+                        tools:ignore="UnusedAttribute">
 
                         <TextView
                             android:id="@+id/textSizeMinus"
@@ -958,11 +1024,13 @@
 
             </LinearLayout>
 
+            <!-- ── Card 4: Gestures ── -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:animateLayoutChanges="true"
                 android:background="@drawable/rounded_rect_shade_color"
                 android:orientation="vertical"
                 android:padding="12dp">
@@ -973,9 +1041,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
                     android:text="@string/gestures"
                     android:textColor="?attr/launcherTextColor" />
 
+                <!-- Auto show keyboard -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/auto_show_keyboard"
+                        android:textColor="?attr/launcherTextColor" />
+
+                    <TextView
+                        android:id="@+id/autoShowKeyboard"
+                        style="@style/TextSmallBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginEnd="4dp"
+                        android:padding="8dp"
+                        android:text="@string/on" />
+                </FrameLayout>
+
+                <!-- Swipe left -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1005,6 +1102,7 @@
                         android:padding="8dp" />
                 </LinearLayout>
 
+                <!-- Swipe right -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1034,13 +1132,13 @@
                         android:padding="8dp" />
                 </LinearLayout>
 
+                <!-- Swipe down action (always visible now) -->
                 <FrameLayout
                     android:id="@+id/flSwipeDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:animateLayoutChanges="true">
 
                     <TextView
                         style="@style/TextSmall"
@@ -1061,9 +1159,9 @@
                         android:layout_gravity="end|bottom"
                         android:layout_marginEnd="4dp"
                         android:lines="1"
-                        android:padding="8dp" />
+                        android:padding="8dp"
+                        tools:text="@string/search" />
 
-                    <!-- Swipe down select layout-->
                     <LinearLayout
                         android:id="@+id/swipeDownSelectLayout"
                         android:layout_width="match_parent"
@@ -1107,12 +1205,13 @@
 
                 </FrameLayout>
 
+                <!-- Double tap to lock -->
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
-                    android:visibility="visible">
+                    android:layout_marginBottom="4dp">
 
                     <TextView
                         style="@style/TextSmall"
@@ -1131,12 +1230,499 @@
                         android:padding="10dp"
                         android:text="@string/off" />
                 </FrameLayout>
+
             </LinearLayout>
 
+            <!-- ── Card 5: Advanced ── -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/rounded_rect_shade_color"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    style="@style/TextLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/advanced"
+                    android:textColor="?attr/launcherTextColor" />
+
+                <!-- Screen time -->
+                <FrameLayout
+                    android:id="@+id/screenTimeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp"
+                    android:animateLayoutChanges="true"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <TextView
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/screen_time"
+                        android:textColor="?attr/launcherTextColor" />
+
+                    <TextView
+                        android:id="@+id/screenTimeOnOff"
+                        style="@style/TextSmallBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginEnd="4dp"
+                        android:padding="8dp"
+                        android:text="@string/off" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <!-- ── Card 6: FAB ── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/rounded_rect_shade_color"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    style="@style/TextLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/fab"
+                    android:textColor="?attr/launcherTextColor" />
+
+                <!-- FAB enabled toggle -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+
+                    <TextView
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/fab_button"
+                        android:textColor="?attr/launcherTextColor" />
+
+                    <TextView
+                        android:id="@+id/fabEnabled"
+                        style="@style/TextSmallBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginEnd="4dp"
+                        android:padding="8dp"
+                        android:text="@string/off" />
+                </FrameLayout>
+
+                <!-- Direction action rows (shown when FAB enabled) -->
+                <LinearLayout
+                    android:id="@+id/fabActionsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <!-- Swipe up -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp">
+
+                        <TextView
+                            style="@style/TextSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/fab_swipe_up"
+                            android:textColor="?attr/launcherTextColor" />
+
+                        <TextView
+                            android:id="@+id/fabUpAction"
+                            style="@style/TextSmallBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|bottom"
+                            android:layout_marginEnd="4dp"
+                            android:padding="8dp" />
+                    </FrameLayout>
+
+                    <!-- Swipe down -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp">
+
+                        <TextView
+                            style="@style/TextSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/fab_swipe_down"
+                            android:textColor="?attr/launcherTextColor" />
+
+                        <TextView
+                            android:id="@+id/fabDownAction"
+                            style="@style/TextSmallBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|bottom"
+                            android:layout_marginEnd="4dp"
+                            android:padding="8dp" />
+                    </FrameLayout>
+
+                    <!-- Swipe left -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp">
+
+                        <TextView
+                            style="@style/TextSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/fab_swipe_left"
+                            android:textColor="?attr/launcherTextColor" />
+
+                        <TextView
+                            android:id="@+id/fabLeftAction"
+                            style="@style/TextSmallBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|bottom"
+                            android:layout_marginEnd="4dp"
+                            android:padding="8dp" />
+                    </FrameLayout>
+
+                    <!-- Swipe right -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="4dp">
+
+                        <TextView
+                            style="@style/TextSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/fab_swipe_right"
+                            android:textColor="?attr/launcherTextColor" />
+
+                        <TextView
+                            android:id="@+id/fabRightAction"
+                            style="@style/TextSmallBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|bottom"
+                            android:layout_marginEnd="4dp"
+                            android:padding="8dp" />
+                    </FrameLayout>
+
+                    <!-- Shared action selector dropdown -->
+                    <HorizontalScrollView
+                        android:id="@+id/fabActionSelectLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_primary_gradient"
+                        android:elevation="8dp"
+                        android:outlineAmbientShadowColor="@color/colorPrimaryDark"
+                        android:outlineSpotShadowColor="@color/colorPrimaryDark"
+                        android:scrollbars="none"
+                        android:visibility="gone"
+                        tools:ignore="UnusedAttribute">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="2dp">
+
+                            <TextView
+                                android:id="@+id/fabSelectNone"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/action_none"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fabSelectDrawer"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/action_app_drawer"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fabSelectSettings"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/action_settings"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fabSelectSearch"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/search"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fabSelectLock"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/action_lock"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/fabSelectNotify"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:padding="8dp"
+                                android:text="@string/notifications"
+                                android:textColor="@color/white" />
+
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ── Card 7: At a Glance ── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/rounded_rect_shade_color"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    style="@style/TextLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/at_a_glance"
+                    android:textColor="?attr/launcherTextColor" />
+
+                <!-- Enable At a Glance -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        style="@style/TextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/at_a_glance_enabled"
+                        android:textColor="?attr/launcherTextColor" />
+
+                    <TextView
+                        android:id="@+id/atAGlanceEnabled"
+                        style="@style/TextSmallBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_marginEnd="4dp"
+                        android:padding="8dp"
+                        android:text="@string/off" />
+
+                </FrameLayout>
+
+                <!-- Sub-settings shown when At a Glance is enabled -->
+                <LinearLayout
+                    android:id="@+id/atAGlanceSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <!-- Weather toggle -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+
+                        <TextView
+                            style="@style/TextSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/show_weather"
+                            android:textColor="?attr/launcherTextColor" />
+
+                        <TextView
+                            android:id="@+id/weatherEnabled"
+                            style="@style/TextSmallBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|bottom"
+                            android:layout_marginEnd="4dp"
+                            android:padding="8dp"
+                            android:text="@string/off" />
+
+                    </FrameLayout>
+
+                    <!-- Weather sub-settings shown when weather is enabled -->
+                    <LinearLayout
+                        android:id="@+id/weatherSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:animateLayoutChanges="true"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <!-- City -->
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp">
+
+                            <TextView
+                                style="@style/TextSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:paddingVertical="8dp"
+                                android:text="@string/weather_city"
+                                android:textColor="?attr/launcherTextColor" />
+
+                            <TextView
+                                android:id="@+id/weatherCityValue"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end|bottom"
+                                android:layout_marginEnd="4dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:padding="8dp"
+                                android:paddingStart="24dp"
+                                tools:text="London" />
+
+                        </FrameLayout>
+
+                        <!-- API Key -->
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp">
+
+                            <TextView
+                                style="@style/TextSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:paddingVertical="8dp"
+                                android:text="@string/weather_api_key"
+                                android:textColor="?attr/launcherTextColor" />
+
+                            <TextView
+                                android:id="@+id/weatherApiKeyValue"
+                                style="@style/TextSmallBold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end|bottom"
+                                android:layout_marginEnd="4dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:padding="8dp"
+                                android:paddingStart="24dp"
+                                tools:text="••••••••" />
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <!-- Music player toggle -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="4dp">
+
+                        <TextView
+                            style="@style/TextSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:paddingVertical="8dp"
+                            android:text="@string/media_player"
+                            android:textColor="?attr/launcherTextColor" />
+
+                        <TextView
+                            android:id="@+id/mediaPlayerEnabled"
+                            style="@style/TextSmallBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|bottom"
+                            android:layout_marginEnd="4dp"
+                            android:padding="8dp"
+                            android:text="@string/off" />
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ── Social links ── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
@@ -1145,18 +1731,19 @@
                     style="@style/TextSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:padding="10dp"
                     android:text="@string/twitter"
                     android:textColor="?attr/launcherTextColor" />
-
 
                 <TextView
                     android:id="@+id/github"
                     style="@style/TextSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:padding="10dp"
                     android:text="@string/github"
                     android:textColor="?attr/launcherTextColor" />
@@ -1166,13 +1753,12 @@
                     style="@style/TextSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:padding="10dp"
                     android:text="@string/privacy"
                     android:textColor="?attr/launcherTextColor" />
-
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -1206,13 +1792,14 @@
                 style="@style/TextLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/double_tap_lock" />
+                android:text="@string/double_tap_lock"
+                android:textColor="?attr/launcherTextColor" />
 
             <TextView
                 style="@style/TextSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:clickable="false"
                 android:text="@string/accessibility_disclosure"
                 android:textColor="?attr/launcherTextColor" />
@@ -1243,16 +1830,16 @@
                     style="@style/TextSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="28dp"
+                    android:layout_marginEnd="20dp"
                     android:paddingVertical="4dp"
                     android:text="@string/close" />
 
                 <TextView
                     android:id="@+id/actionAccessibility"
-                    style="@style/TextSmall"
+                    style="@style/TextSmallBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="4dp"
                     android:paddingVertical="4dp"
                     android:text="@string/enable" />
 

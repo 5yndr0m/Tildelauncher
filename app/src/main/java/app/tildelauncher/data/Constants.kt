@@ -40,6 +40,15 @@ object Constants {
         const val NOTIFICATIONS = 2
     }
 
+    object FabAction {
+        const val NONE = 0
+        const val APP_DRAWER = 1
+        const val SETTINGS = 2
+        const val SEARCH = 3
+        const val LOCK_SCREEN = 4
+        const val NOTIFICATIONS = 5
+    }
+
     object CharacterIndicator {
         const val SHOW = 102
         const val HIDE = 101
@@ -77,6 +86,8 @@ object Constants {
     const val REQUEST_CODE_LAUNCHER_SELECTOR = 678
 
     const val HINT_RATE_US = 15
+
+    const val WEATHER_WORK_NAME = "weather_refresh"
 
     const val LONG_PRESS_DELAY_MS = 500L
     const val ONE_DAY_IN_MILLIS = 86400000L

@@ -1,6 +1,7 @@
 package app.tildelauncher
 
 import android.app.Application
+import android.app.usage.UsageStatsManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.LauncherApps
@@ -11,7 +12,10 @@ import androidx.lifecycle.viewModelScope
 import app.tildelauncher.data.AppModel
 import app.tildelauncher.data.Constants
 import app.tildelauncher.data.Prefs
+import app.tildelauncher.data.WeatherData
+import app.tildelauncher.helper.fetchWeather
 import app.tildelauncher.helper.SingleLiveEvent
+import app.tildelauncher.helper.appUsagePermissionGranted
 import app.tildelauncher.helper.formattedTimeSpent
 import app.tildelauncher.helper.getAppsList
 import app.tildelauncher.helper.hasBeenMinutes
@@ -19,6 +23,7 @@ import app.tildelauncher.helper.isTildelauncherDefault
 import app.tildelauncher.helper.isPackageInstalled
 import app.tildelauncher.helper.showToast
 import app.tildelauncher.helper.usageStats.EventLogWrapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
@@ -29,6 +34,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val firstOpen = MutableLiveData<Boolean>()
     val refreshHome = MutableLiveData<Boolean>()
+    val usageSortedApps = MutableLiveData<List<Pair<String, String>>>()
     val toggleDateTime = MutableLiveData<Unit>()
     val updateSwipeApps = MutableLiveData<Any>()
     val appList = MutableLiveData<List<AppModel>?>()
@@ -37,6 +43,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val launcherResetFailed = MutableLiveData<Boolean>()
     val homeAppAlignment = MutableLiveData<Int>()
     val screenTimeValue = MutableLiveData<String>()
+    val weatherData = MutableLiveData<WeatherData?>()
 
     val showDialog = SingleLiveEvent<String>()
     val checkForMessages = SingleLiveEvent<Unit?>()
@@ -394,6 +401,61 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val viewTimeSpent = appContext.formattedTimeSpent(timeSpent)
         screenTimeValue.postValue(viewTimeSpent)
         prefs.screenTimeLastUpdated = endTime
+    }
+
+    fun getUsageSortedApps(pinnedPackages: Set<String>, maxCount: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (!appContext.appUsagePermissionGranted()) {
+                usageSortedApps.postValue(emptyList())
+                return@launch
+            }
+            val usageStatsManager = appContext.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+            val now = System.currentTimeMillis()
+            val weekAgo = now - 7L * 24 * 60 * 60 * 1000
+            val stats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_WEEKLY, weekAgo, now)
+            val result = stats
+                .asSequence()
+                .filter { it.packageName !in pinnedPackages }
+                .filter { it.packageName != appContext.packageName }
+                .filter { it.lastTimeUsed > 0 }
+                .sortedByDescending { it.lastTimeUsed }
+                .mapNotNull { stat ->
+                    try {
+                        val info = appContext.packageManager.getApplicationInfo(stat.packageName, 0)
+                        if (!info.enabled) return@mapNotNull null
+                        val label = info.loadLabel(appContext.packageManager).toString()
+                        Pair(stat.packageName, label)
+                    } catch (e: Exception) { null }
+                }
+                .take(maxCount)
+                .toList()
+            usageSortedApps.postValue(result)
+        }
+    }
+
+    fun refreshWeather() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (!prefs.atAGlanceEnabled || !prefs.weatherEnabled) return@launch
+            if (prefs.weatherCity.isBlank() || prefs.weatherApiKey.isBlank()) {
+                if (prefs.weatherCachedTemp.isNotBlank()) {
+                    weatherData.postValue(
+                        WeatherData(prefs.weatherCachedTemp, prefs.weatherCachedCondition, prefs.weatherCacheTimestamp)
+                    )
+                }
+                return@launch
+            }
+            val data = fetchWeather(prefs.weatherCity, prefs.weatherApiKey)
+            if (data != null) {
+                prefs.weatherCachedTemp = data.temp
+                prefs.weatherCachedCondition = data.condition
+                prefs.weatherCacheTimestamp = data.timestamp
+                weatherData.postValue(data)
+            } else if (prefs.weatherCachedTemp.isNotBlank()) {
+                weatherData.postValue(
+                    WeatherData(prefs.weatherCachedTemp, prefs.weatherCachedCondition, prefs.weatherCacheTimestamp)
+                )
+            }
+        }
     }
 
     fun setDefaultClockApp() {

@@ -1,6 +1,8 @@
 package app.tildelauncher.ui
 
+import android.app.AlertDialog
 import android.app.admin.DevicePolicyManager
+import android.widget.EditText
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -67,6 +69,9 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         checkAdminPermission()
 
         binding.homeAppsNum.text = prefs.homeAppsNum.toString()
+        populateDynamicAppsSettings()
+        populateFabSettings()
+        populateAtAGlanceSettings()
 
         populateKeyboardText()
         populateScreenTimeOnOff()
@@ -93,6 +98,8 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
         binding.swipeDownSelectLayout.visibility = View.GONE
         binding.fontFamilySelectLayout.visibility = View.GONE
         binding.textColorSelectLayout.visibility = View.GONE
+        binding.dynamicAppsNumSelectLayout.visibility = View.GONE
+        binding.fabActionSelectLayout.visibility = View.GONE
         if (view.id != R.id.textSizeMinus && view.id != R.id.textSizePlus) {
             if (binding.textSizesLayout.visibility == View.VISIBLE) {
                 binding.textSizesLayout.visibility = View.GONE
@@ -103,6 +110,31 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             binding.alignmentSelectLayout.visibility = View.GONE
 
         when (view.id) {
+            R.id.atAGlanceEnabled -> toggleAtAGlance()
+            R.id.weatherEnabled -> toggleWeather()
+            R.id.weatherCityValue -> showInputDialog(getString(R.string.weather_city_hint), prefs.weatherCity) { prefs.weatherCity = it; populateAtAGlanceSettings() }
+            R.id.weatherApiKeyValue -> showInputDialog(getString(R.string.weather_api_key_hint), prefs.weatherApiKey) { prefs.weatherApiKey = it; populateAtAGlanceSettings() }
+            R.id.mediaPlayerEnabled -> toggleMediaPlayer()
+
+            R.id.fabEnabled -> toggleFab()
+            R.id.fabUpAction -> showFabActionSelector(0)
+            R.id.fabDownAction -> showFabActionSelector(1)
+            R.id.fabLeftAction -> showFabActionSelector(2)
+            R.id.fabRightAction -> showFabActionSelector(3)
+            R.id.fabSelectNone -> updateFabAction(Constants.FabAction.NONE)
+            R.id.fabSelectDrawer -> updateFabAction(Constants.FabAction.APP_DRAWER)
+            R.id.fabSelectSettings -> updateFabAction(Constants.FabAction.SETTINGS)
+            R.id.fabSelectSearch -> updateFabAction(Constants.FabAction.SEARCH)
+            R.id.fabSelectLock -> updateFabAction(Constants.FabAction.LOCK_SCREEN)
+            R.id.fabSelectNotify -> updateFabAction(Constants.FabAction.NOTIFICATIONS)
+
+            R.id.dynamicAppsOnOff -> toggleDynamicApps()
+            R.id.dynamicAppsNum -> binding.dynamicAppsNumSelectLayout.visibility = View.VISIBLE
+            R.id.dynApps1 -> updateDynamicAppsNum(1)
+            R.id.dynApps2 -> updateDynamicAppsNum(2)
+            R.id.dynApps3 -> updateDynamicAppsNum(3)
+            R.id.dynApps4 -> updateDynamicAppsNum(4)
+
             R.id.tildelauncherHiddenApps -> showHiddenApps()
 
             R.id.screenTimeOnOff -> viewModel.showDialog.postValue(Constants.Dialog.DIGITAL_WELLBEING)
@@ -130,8 +162,6 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             R.id.actionAccessibility -> openAccessibilityService()
             R.id.closeAccessibility -> toggleAccessibilityVisibility(false)
             R.id.notWorking -> requireContext().openUrl(Constants.URL_DOUBLE_TAP)
-
-            R.id.tvGestures -> binding.flSwipeDown.visibility = View.VISIBLE
 
             R.id.fontFamilyText -> binding.fontFamilySelectLayout.visibility = View.VISIBLE
             R.id.fontSystem -> updateFont(R.style.FontSystem)
@@ -209,6 +239,31 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
     }
 
     private fun initClickListeners() {
+        binding.atAGlanceEnabled.setOnClickListener(this)
+        binding.weatherEnabled.setOnClickListener(this)
+        binding.weatherCityValue.setOnClickListener(this)
+        binding.weatherApiKeyValue.setOnClickListener(this)
+        binding.mediaPlayerEnabled.setOnClickListener(this)
+
+        binding.fabEnabled.setOnClickListener(this)
+        binding.fabUpAction.setOnClickListener(this)
+        binding.fabDownAction.setOnClickListener(this)
+        binding.fabLeftAction.setOnClickListener(this)
+        binding.fabRightAction.setOnClickListener(this)
+        binding.fabSelectNone.setOnClickListener(this)
+        binding.fabSelectDrawer.setOnClickListener(this)
+        binding.fabSelectSettings.setOnClickListener(this)
+        binding.fabSelectSearch.setOnClickListener(this)
+        binding.fabSelectLock.setOnClickListener(this)
+        binding.fabSelectNotify.setOnClickListener(this)
+
+        binding.dynamicAppsOnOff.setOnClickListener(this)
+        binding.dynamicAppsNum.setOnClickListener(this)
+        binding.dynApps1.setOnClickListener(this)
+        binding.dynApps2.setOnClickListener(this)
+        binding.dynApps3.setOnClickListener(this)
+        binding.dynApps4.setOnClickListener(this)
+
         binding.tildelauncherHiddenApps.setOnClickListener(this)
         binding.scrollLayout.setOnClickListener(this)
         binding.appInfo.setOnClickListener(this)
@@ -465,6 +520,7 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
     }
 
     private var pendingTextSizeScale: Float = -1f
+    private var activeFabDirection: Int = 0 // 0=up, 1=down, 2=left, 3=right
 
     private fun adjustTextSizePreview(delta: Float) {
         val maxScale = if (isTablet(requireContext())) 2.0f else 1.5f
@@ -670,6 +726,108 @@ class SettingsFragment : Fragment(), View.OnClickListener, View.OnLongClickListe
             binding.aboutTildelauncher.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_info, 0)
     }
 
+
+    private fun fabActionLabel(action: Int): String = getString(when (action) {
+        Constants.FabAction.APP_DRAWER -> R.string.action_app_drawer
+        Constants.FabAction.SETTINGS -> R.string.action_settings
+        Constants.FabAction.SEARCH -> R.string.search
+        Constants.FabAction.LOCK_SCREEN -> R.string.action_lock
+        Constants.FabAction.NOTIFICATIONS -> R.string.notifications
+        else -> R.string.action_none
+    })
+
+    private fun populateFabSettings() {
+        binding.fabEnabled.text = getString(if (prefs.fabEnabled) R.string.on else R.string.off)
+        binding.fabActionsLayout.visibility = if (prefs.fabEnabled) View.VISIBLE else View.GONE
+        binding.fabUpAction.text = fabActionLabel(prefs.fabActionUp)
+        binding.fabDownAction.text = fabActionLabel(prefs.fabActionDown)
+        binding.fabLeftAction.text = fabActionLabel(prefs.fabActionLeft)
+        binding.fabRightAction.text = fabActionLabel(prefs.fabActionRight)
+    }
+
+    private fun toggleFab() {
+        prefs.fabEnabled = !prefs.fabEnabled
+        populateFabSettings()
+        viewModel.refreshHome(false)
+    }
+
+    private fun showFabActionSelector(direction: Int) {
+        activeFabDirection = direction
+        binding.fabActionSelectLayout.visibility = View.VISIBLE
+    }
+
+    private fun updateFabAction(action: Int) {
+        when (activeFabDirection) {
+            0 -> prefs.fabActionUp = action
+            1 -> prefs.fabActionDown = action
+            2 -> prefs.fabActionLeft = action
+            3 -> prefs.fabActionRight = action
+        }
+        binding.fabActionSelectLayout.visibility = View.GONE
+        populateFabSettings()
+        viewModel.refreshHome(false)
+    }
+
+    private fun populateAtAGlanceSettings() {
+        binding.atAGlanceEnabled.text = getString(if (prefs.atAGlanceEnabled) R.string.on else R.string.off)
+        binding.atAGlanceSettings.visibility = if (prefs.atAGlanceEnabled) View.VISIBLE else View.GONE
+        binding.weatherEnabled.text = getString(if (prefs.weatherEnabled) R.string.on else R.string.off)
+        binding.weatherSettings.visibility = if (prefs.weatherEnabled && prefs.atAGlanceEnabled) View.VISIBLE else View.GONE
+        binding.weatherCityValue.text = prefs.weatherCity.ifBlank { getString(R.string.weather_not_set) }
+        binding.weatherApiKeyValue.text = if (prefs.weatherApiKey.isBlank()) getString(R.string.weather_not_set) else "••••••"
+        binding.mediaPlayerEnabled.text = getString(if (prefs.mediaSessionEnabled) R.string.on else R.string.off)
+    }
+
+    private fun toggleAtAGlance() {
+        prefs.atAGlanceEnabled = !prefs.atAGlanceEnabled
+        populateAtAGlanceSettings()
+        viewModel.refreshHome(false)
+    }
+
+    private fun toggleWeather() {
+        prefs.weatherEnabled = !prefs.weatherEnabled
+        populateAtAGlanceSettings()
+    }
+
+    private fun toggleMediaPlayer() {
+        prefs.mediaSessionEnabled = !prefs.mediaSessionEnabled
+        populateAtAGlanceSettings()
+    }
+
+    private fun showInputDialog(hint: String, current: String, onConfirm: (String) -> Unit) {
+        val editText = EditText(requireContext()).apply {
+            setText(current)
+            setSingleLine()
+        }
+        AlertDialog.Builder(requireContext())
+            .setMessage(hint)
+            .setView(editText)
+            .setPositiveButton(getString(R.string.okay)) { _, _ -> onConfirm(editText.text.toString().trim()) }
+            .setNegativeButton(getString(R.string.close), null)
+            .show()
+    }
+
+    private fun populateDynamicAppsSettings() {
+        binding.dynamicAppsOnOff.text = getString(
+            if (prefs.dynamicAppsEnabled) R.string.on else R.string.off
+        )
+        binding.dynamicAppsCountLayout.visibility =
+            if (prefs.dynamicAppsEnabled) View.VISIBLE else View.GONE
+        binding.dynamicAppsNum.text = prefs.dynamicAppsNum.toString()
+    }
+
+    private fun toggleDynamicApps() {
+        prefs.dynamicAppsEnabled = !prefs.dynamicAppsEnabled
+        populateDynamicAppsSettings()
+        viewModel.refreshHome(false)
+    }
+
+    private fun updateDynamicAppsNum(num: Int) {
+        prefs.dynamicAppsNum = num
+        binding.dynamicAppsNum.text = num.toString()
+        binding.dynamicAppsNumSelectLayout.visibility = View.GONE
+        viewModel.refreshHome(false)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

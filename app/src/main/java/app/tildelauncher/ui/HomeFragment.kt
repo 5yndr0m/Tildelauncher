@@ -42,11 +42,19 @@ import app.tildelauncher.helper.openCameraApp
 import app.tildelauncher.helper.openDialerApp
 import app.tildelauncher.helper.openSearch
 import app.tildelauncher.helper.showToast
+import app.tildelauncher.helper.getActiveMediaPackage
+import app.tildelauncher.helper.isNotificationListenerEnabled
+import app.tildelauncher.listener.FabSwipeTouchListener
 import app.tildelauncher.listener.OnSwipeTouchListener
 import app.tildelauncher.listener.ViewSwipeTouchListener
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import app.tildelauncher.worker.WeatherWorker
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener {
 
@@ -56,6 +64,9 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    // Usage-based dynamic app slots: (packageName, label)
+    private var dynamicApps: List<Pair<String, String>> = emptyList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -75,6 +86,8 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         setHomeAlignment(prefs.homeAlignment)
         initSwipeTouchListener()
         initClickListeners()
+        initFab()
+        initAtAGlanceBar()
     }
 
     override fun onResume() {
@@ -83,6 +96,11 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         viewModel.isTildelauncherDefault()
         if (prefs.showStatusBar) showStatusBar()
         else hideStatusBar()
+        if (prefs.atAGlanceEnabled) {
+            viewModel.refreshWeather()
+            scheduleWeatherWorker()
+            updateMediaPlayer()
+        }
     }
 
     override fun onClick(view: View) {
@@ -152,6 +170,11 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
                 prefs.calendarAppUser = ""
             }
 
+            R.id.homeAppDynamic1,
+            R.id.homeAppDynamic2,
+            R.id.homeAppDynamic3,
+            R.id.homeAppDynamic4 -> requireContext().showToast(getString(R.string.suggested_by_usage))
+
             R.id.setDefaultLauncher -> {
                 prefs.hideSetDefaultLauncher = true
                 binding.setDefaultLauncher.visibility = View.GONE
@@ -192,6 +215,18 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         viewModel.screenTimeValue.observe(viewLifecycleOwner) {
             it?.let { binding.tvScreenTime.text = it }
         }
+        viewModel.usageSortedApps.observe(viewLifecycleOwner) { apps ->
+            dynamicApps = apps
+            populateDynamicApps()
+        }
+        viewModel.weatherData.observe(viewLifecycleOwner) { data ->
+            if (data != null && prefs.atAGlanceEnabled && prefs.weatherEnabled) {
+                binding.tvWeather.text = "${data.temp} ${data.condition}"
+                binding.tvWeather.visibility = View.VISIBLE
+            } else {
+                binding.tvWeather.visibility = View.GONE
+            }
+        }
     }
 
     private fun initSwipeTouchListener() {
@@ -205,6 +240,10 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         binding.homeApp6.setOnTouchListener(getViewSwipeTouchListener(context, binding.homeApp6))
         binding.homeApp7.setOnTouchListener(getViewSwipeTouchListener(context, binding.homeApp7))
         binding.homeApp8.setOnTouchListener(getViewSwipeTouchListener(context, binding.homeApp8))
+        binding.homeAppDynamic1.setOnTouchListener(getViewSwipeTouchListener(context, binding.homeAppDynamic1))
+        binding.homeAppDynamic2.setOnTouchListener(getViewSwipeTouchListener(context, binding.homeAppDynamic2))
+        binding.homeAppDynamic3.setOnTouchListener(getViewSwipeTouchListener(context, binding.homeAppDynamic3))
+        binding.homeAppDynamic4.setOnTouchListener(getViewSwipeTouchListener(context, binding.homeAppDynamic4))
     }
 
     private fun initClickListeners() {
@@ -216,6 +255,10 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         binding.setDefaultLauncher.setOnClickListener(this)
         binding.setDefaultLauncher.setOnLongClickListener(this)
         binding.tvScreenTime.setOnClickListener(this)
+        binding.homeAppDynamic1.setOnLongClickListener(this)
+        binding.homeAppDynamic2.setOnLongClickListener(this)
+        binding.homeAppDynamic3.setOnLongClickListener(this)
+        binding.homeAppDynamic4.setOnLongClickListener(this)
     }
 
     private fun setHomeAlignment(horizontalGravity: Int = prefs.homeAlignment) {
@@ -230,6 +273,10 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         binding.homeApp6.gravity = horizontalGravity
         binding.homeApp7.gravity = horizontalGravity
         binding.homeApp8.gravity = horizontalGravity
+        binding.homeAppDynamic1.gravity = horizontalGravity
+        binding.homeAppDynamic2.gravity = horizontalGravity
+        binding.homeAppDynamic3.gravity = horizontalGravity
+        binding.homeAppDynamic4.gravity = horizontalGravity
     }
 
     private fun populateDateTime() {
@@ -280,6 +327,8 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
     private fun populateHomeScreen(appCountUpdated: Boolean) {
         if (appCountUpdated) hideHomeApps()
         populateDateTime()
+        if (prefs.dynamicAppsEnabled)
+            viewModel.getUsageSortedApps(getPinnedPackages(), prefs.dynamicAppsNum)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
             populateScreenTime()
@@ -391,6 +440,34 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
         binding.homeApp6.visibility = View.GONE
         binding.homeApp7.visibility = View.GONE
         binding.homeApp8.visibility = View.GONE
+        binding.homeAppDynamic1.visibility = View.GONE
+        binding.homeAppDynamic2.visibility = View.GONE
+        binding.homeAppDynamic3.visibility = View.GONE
+        binding.homeAppDynamic4.visibility = View.GONE
+    }
+
+    private fun getPinnedPackages(): Set<String> {
+        return setOf(
+            prefs.appPackage1, prefs.appPackage2, prefs.appPackage3, prefs.appPackage4,
+            prefs.appPackage5, prefs.appPackage6, prefs.appPackage7, prefs.appPackage8
+        ).filter { it.isNotEmpty() }.toSet()
+    }
+
+    private fun populateDynamicApps() {
+        val dynamicViews = listOf(
+            binding.homeAppDynamic1, binding.homeAppDynamic2,
+            binding.homeAppDynamic3, binding.homeAppDynamic4
+        )
+        dynamicViews.forEach { it.visibility = View.GONE }
+
+        if (!prefs.dynamicAppsEnabled || dynamicApps.isEmpty()) return
+
+        val count = minOf(prefs.dynamicAppsNum, dynamicApps.size, dynamicViews.size)
+        for (i in 0 until count) {
+            dynamicViews[i].text = dynamicApps[i].second
+            dynamicViews[i].gravity = prefs.homeAlignment
+            dynamicViews[i].visibility = View.VISIBLE
+        }
     }
 
     private fun launchAppOrShortcut(
@@ -454,6 +531,11 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
     }
 
     private fun homeAppClicked(location: Int) {
+        if (location > 8) {
+            val dynamic = dynamicApps.getOrNull(location - 9) ?: return
+            launchApp(dynamic.second, dynamic.first, null, android.os.Process.myUserHandle().toString())
+            return
+        }
         launchAppOrShortcut(
             appName = prefs.getAppName(location),
             packageName = prefs.getAppPackage(location),
@@ -661,6 +743,71 @@ class HomeFragment : Fragment(), View.OnClickListener, View.OnLongClickListener 
                 super.onClick(view)
                 textOnClick(view)
             }
+        }
+    }
+
+    private fun initAtAGlanceBar() {
+        if (!prefs.atAGlanceEnabled) {
+            binding.atAGlanceBar.visibility = View.GONE
+            return
+        }
+        binding.atAGlanceBar.visibility = View.VISIBLE
+        binding.tvMediaPlayer.setOnClickListener {
+            val pkg = getActiveMediaPackage(requireContext())
+            if (!pkg.isNullOrEmpty()) {
+                launchApp("", pkg, null, android.os.Process.myUserHandle().toString())
+            }
+        }
+    }
+
+    private fun updateMediaPlayer() {
+        if (!prefs.atAGlanceEnabled || !prefs.mediaSessionEnabled) {
+            binding.tvMediaPlayer.visibility = View.GONE
+            return
+        }
+        if (!isNotificationListenerEnabled(requireContext())) {
+            binding.tvMediaPlayer.visibility = View.GONE
+            return
+        }
+        val pkg = getActiveMediaPackage(requireContext())
+        binding.tvMediaPlayer.visibility = if (pkg != null) View.VISIBLE else View.GONE
+    }
+
+    private fun scheduleWeatherWorker() {
+        if (!prefs.weatherEnabled || prefs.weatherCity.isBlank() || prefs.weatherApiKey.isBlank()) return
+        val request = PeriodicWorkRequestBuilder<WeatherWorker>(30, TimeUnit.MINUTES).build()
+        WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
+            Constants.WEATHER_WORK_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            request
+        )
+    }
+
+    private fun initFab() {
+        if (!prefs.fabEnabled) {
+            binding.fab.visibility = View.GONE
+            return
+        }
+        binding.fab.visibility = View.VISIBLE
+        binding.fab.setOnTouchListener(object : FabSwipeTouchListener() {
+            override fun onSwipeUp() { executeFabAction(prefs.fabActionUp) }
+            override fun onSwipeDown() { executeFabAction(prefs.fabActionDown) }
+            override fun onSwipeLeft() { executeFabAction(prefs.fabActionLeft) }
+            override fun onSwipeRight() { executeFabAction(prefs.fabActionRight) }
+            override fun onClick() { executeFabAction(prefs.fabActionUp) }
+        })
+    }
+
+    private fun executeFabAction(action: Int) {
+        when (action) {
+            Constants.FabAction.APP_DRAWER -> showAppList(Constants.FLAG_LAUNCH_APP)
+            Constants.FabAction.SETTINGS -> {
+                try { findNavController().navigate(R.id.action_mainFragment_to_settingsFragment) }
+                catch (e: Exception) { e.printStackTrace() }
+            }
+            Constants.FabAction.SEARCH -> openSearch(requireContext())
+            Constants.FabAction.LOCK_SCREEN -> lockPhone()
+            Constants.FabAction.NOTIFICATIONS -> expandNotificationDrawer(requireContext())
         }
     }
 

@@ -110,6 +110,21 @@ class Prefs(context: Context) {
     private val IS_SHORTCUT_SWIPE_LEFT = "IS_SHORTCUT_SWIPE_LEFT"
     private val SHORTCUT_ID_SWIPE_RIGHT = "SHORTCUT_ID_SWIPE_RIGHT"
     private val IS_SHORTCUT_SWIPE_RIGHT = "IS_SHORTCUT_SWIPE_RIGHT"
+    private val DYNAMIC_APPS_ENABLED = "DYNAMIC_APPS_ENABLED"
+    private val DYNAMIC_APPS_NUM = "DYNAMIC_APPS_NUM"
+    private val FAB_ENABLED = "FAB_ENABLED"
+    private val AT_A_GLANCE_ENABLED = "AT_A_GLANCE_ENABLED"
+    private val WEATHER_ENABLED = "WEATHER_ENABLED"
+    private val WEATHER_API_KEY = "WEATHER_API_KEY"
+    private val WEATHER_CITY = "WEATHER_CITY"
+    private val WEATHER_CACHED_TEMP = "WEATHER_CACHED_TEMP"
+    private val WEATHER_CACHED_CONDITION = "WEATHER_CACHED_CONDITION"
+    private val WEATHER_CACHE_TIMESTAMP = "WEATHER_CACHE_TIMESTAMP"
+    private val MEDIA_SESSION_ENABLED = "MEDIA_SESSION_ENABLED"
+    private val FAB_ACTION_UP = "FAB_ACTION_UP"
+    private val FAB_ACTION_DOWN = "FAB_ACTION_DOWN"
+    private val FAB_ACTION_LEFT = "FAB_ACTION_LEFT"
+    private val FAB_ACTION_RIGHT = "FAB_ACTION_RIGHT"
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_FILENAME, 0)
 
@@ -571,6 +586,66 @@ class Prefs(context: Context) {
             else -> false
         }
     }
+
+    var fabEnabled: Boolean
+        get() = prefs.getBoolean(FAB_ENABLED, false)
+        set(value) = prefs.edit { putBoolean(FAB_ENABLED, value).apply() }
+
+    var fabActionUp: Int
+        get() = prefs.getInt(FAB_ACTION_UP, Constants.FabAction.APP_DRAWER)
+        set(value) = prefs.edit { putInt(FAB_ACTION_UP, value).apply() }
+
+    var fabActionDown: Int
+        get() = prefs.getInt(FAB_ACTION_DOWN, Constants.FabAction.NONE)
+        set(value) = prefs.edit { putInt(FAB_ACTION_DOWN, value).apply() }
+
+    var fabActionLeft: Int
+        get() = prefs.getInt(FAB_ACTION_LEFT, Constants.FabAction.SETTINGS)
+        set(value) = prefs.edit { putInt(FAB_ACTION_LEFT, value).apply() }
+
+    var fabActionRight: Int
+        get() = prefs.getInt(FAB_ACTION_RIGHT, Constants.FabAction.LOCK_SCREEN)
+        set(value) = prefs.edit { putInt(FAB_ACTION_RIGHT, value).apply() }
+
+    var dynamicAppsEnabled: Boolean
+        get() = prefs.getBoolean(DYNAMIC_APPS_ENABLED, false)
+        set(value) = prefs.edit { putBoolean(DYNAMIC_APPS_ENABLED, value).apply() }
+
+    var dynamicAppsNum: Int
+        get() = prefs.getInt(DYNAMIC_APPS_NUM, 3)
+        set(value) = prefs.edit { putInt(DYNAMIC_APPS_NUM, value).apply() }
+
+    var atAGlanceEnabled: Boolean
+        get() = prefs.getBoolean(AT_A_GLANCE_ENABLED, false)
+        set(value) = prefs.edit { putBoolean(AT_A_GLANCE_ENABLED, value).apply() }
+
+    var weatherEnabled: Boolean
+        get() = prefs.getBoolean(WEATHER_ENABLED, true)
+        set(value) = prefs.edit { putBoolean(WEATHER_ENABLED, value).apply() }
+
+    var weatherApiKey: String
+        get() = prefs.getString(WEATHER_API_KEY, "").toString()
+        set(value) = prefs.edit { putString(WEATHER_API_KEY, value).apply() }
+
+    var weatherCity: String
+        get() = prefs.getString(WEATHER_CITY, "").toString()
+        set(value) = prefs.edit { putString(WEATHER_CITY, value).apply() }
+
+    var weatherCachedTemp: String
+        get() = prefs.getString(WEATHER_CACHED_TEMP, "").toString()
+        set(value) = prefs.edit { putString(WEATHER_CACHED_TEMP, value).apply() }
+
+    var weatherCachedCondition: String
+        get() = prefs.getString(WEATHER_CACHED_CONDITION, "").toString()
+        set(value) = prefs.edit { putString(WEATHER_CACHED_CONDITION, value).apply() }
+
+    var weatherCacheTimestamp: Long
+        get() = prefs.getLong(WEATHER_CACHE_TIMESTAMP, 0L)
+        set(value) = prefs.edit { putLong(WEATHER_CACHE_TIMESTAMP, value).apply() }
+
+    var mediaSessionEnabled: Boolean
+        get() = prefs.getBoolean(MEDIA_SESSION_ENABLED, true)
+        set(value) = prefs.edit { putBoolean(MEDIA_SESSION_ENABLED, value).apply() }
 
     fun getAppRenameLabel(appPackage: String): String = prefs.getString(appPackage, "").toString()
 
